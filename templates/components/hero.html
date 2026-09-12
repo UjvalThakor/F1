@@ -1,0 +1,138 @@
+{% load static %}
+<!-- ==========================================================================
+     HERO OPENING UI — EXACT NICKHO-MOTORSPORTS.NL COMPOSITION WITH USER'S DRIVER
+     ========================================================================== -->
+<section id="hero" class="section_hero">
+  
+  <!-- 1. STAGE BACKGROUND LAYERS (Red Bull F1 Garage & Car Composite) -->
+  <div class="hero_stage" data-trail="stage">
+    <!-- Stage: Red Bull F1 Pit Garage & Car in Right Frame -->
+    <div class="hero_image-wrapper is-garage">
+      <img 
+        src="{% static 'images/hero_redbull_stage_bg.jpg' %}" 
+        alt="Oracle Red Bull Racing Garage and Formula 1 Car" 
+        class="image is-garage"
+        loading="eager"
+        fetchpriority="high"
+      >
+    </div>
+
+    <!-- Authentic Max Verstappen Cutout in Helmet & Red Bull Suit -->
+    <div class="hero_image-wrapper is-driver is-max-driver">
+      <img 
+        id="heroDriverPhoto"
+        src="{% static 'images/max_driver_cutout.png' %}" 
+        alt="Max Verstappen in Helmet and Race Suit" 
+        class="image is-driver"
+        loading="eager"
+      >
+    </div>
+  </div>
+
+  <!-- 2. GIANT CENTER NUMBER "1" -->
+  <div class="loader_number_display" aria-hidden="true">1</div>
+
+  <!-- 3. GRADIENT VIGNETTE & CYAN/BLUE EDGE GLOW -->
+  <div class="hero_gradient" aria-hidden="true"></div>
+
+  <!-- 4. 6-COLUMN GRID DIVIDER LINES -->
+  <div class="bg_lines_wrapper" aria-hidden="true">
+    <div class="line-wrapper">
+      <div class="invisible_bg_line"></div>
+      <div class="bg_line"></div>
+      <div class="bg_line"></div>
+      <div class="bg_line hide-mobile-landscape"></div>
+      <div class="bg_line hide-mobile-landscape"></div>
+      <div class="bg_line hide-mobile-landscape"></div>
+      <div class="bg_line hide-mobile-landscape"></div>
+      <div class="invisible_bg_line"></div>
+    </div>
+  </div>
+
+  <!-- 5. TOP NAVIGATION BAR -->
+  <nav class="bold-nav-full">
+    <!-- Exact Logo / Monogram -->
+    <a href="#hero" class="bold-nav-full__logo" aria-label="Max Verstappen Home">
+      <img src="{% static 'images/nickho_logo.png' %}" alt="Logo" class="nav-logo-img">
+    </a>
+
+    <!-- Exact Yellow Hamburger Button -->
+    <button class="bold-nav-full__hamburger" id="navHamburgerBtn" aria-label="Open Menu">
+      <div class="bold-nav-full__hamburger-bar"></div>
+      <div class="bold-nav-full__hamburger-bar"></div>
+      <div class="bold-nav-full__humburger-bg"></div>
+    </button>
+  </nav>
+
+  <!-- 6. FOREGROUND GRID CONTENT -->
+  <div class="container is-full-height">
+    <div class="padding-global is-hero">
+      <div class="hero_wrapper">
+
+        <!-- Top Grid Row (6 Columns) -->
+        <div class="grid-global is-hero">
+          
+          <!-- Column 1 (Far Left): Stats Numbers -->
+          <div class="hero_list_wrapper text-align-left">
+            <div class="hero_stats_item">
+              <div class="heading-medium">1</div>
+              <p class="text-size-small is-opacity-80">Car number</p>
+            </div>
+            <div class="hero_stats_item">
+              <div class="heading-medium">111</div>
+              <p class="text-size-small is-opacity-80">Career podiums</p>
+            </div>
+            <div class="hero_stats_item">
+              <div class="heading-medium">24</div>
+              <p class="text-size-small is-opacity-80">Circuits raced</p>
+            </div>
+          </div>
+
+          <!-- Column 6 (Far Right): Bio Details -->
+          <div class="hero_list_wrapper text-align-right">
+            <p class="text-size-small hero-bio-quote">Every lap is a test. Not just of the car, but of myself.</p>
+            
+            <div class="hero_list_item">
+              <p class="text-size-small text-weight-bold">Monte Carlo</p>
+              <p class="text-size-small">The Netherlands</p>
+            </div>
+            <div class="hero_list_item">
+              <p class="text-size-small text-weight-bold">11+</p>
+              <p class="text-size-small">Years in motorsport</p>
+            </div>
+            <div class="hero_list_item">
+              <p class="text-size-small text-weight-bold">28</p>
+              <p class="text-size-small">Years old</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Grid Row (6 Columns) -->
+        <div class="grid-global is-bottom">
+          
+          <!-- Bottom Left (Columns 1-3): Driver Name & Quote -->
+          <div class="text_wrapper">
+            <h1 class="heading-large">Max Verstappen</h1>
+            <p class="text-size-small is-opacity-80 hero-bottom-quote">
+              For me, racing is about more than chasing speed, it’s about chasing my limits. Every lap is a test. Not just of the car, but of myself.
+            </p>
+          </div>
+
+          <!-- Bottom Right (Column 6): Next Race Countdown -->
+          <div class="hero_stats_wrapper">
+            <div class="hero_stats_item is-countdown">
+              <p class="text-size-small is-opacity-80">Race 8 - Monaco GP</p>
+              <div class="heading-medium is-countdown" id="heroDigitalClock">
+                29:16:53:07
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>

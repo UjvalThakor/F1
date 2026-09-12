@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}DISPATCHES & EDITORIAL NEWS — MAX VERSTAPPEN{% endblock %}
+
+{% block content %}
+<div style="padding-top: var(--nav-height);">
+  <section class="section">
+    <div class="container">
+      <div class="section-header with-action">
+        <div>
+          <div class="section-meta-top">
+            <span class="section-index">ARCHIVE // STORIES</span>
+            <span class="telemetry-label">DISPATCHES & MEDIA</span>
+          </div>
+          <h1 class="section-headline">NEWS & PRESS ARCHIVE</h1>
+        </div>
+
+        <div class="gallery-filter-bar" style="margin-bottom: 0;">
+          <a href="{% url 'news_list' %}" class="gallery-tab-btn {% if not active_category %}active{% endif %}">ALL</a>
+          {% for cat in categories %}
+          <a href="{% url 'news_list' %}?category={{ cat.slug }}" class="gallery-tab-btn {% if active_category == cat.slug %}active{% endif %}">
+            {{ cat.name }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="news-grid" style="margin-top: 2rem;">
+        {% for article in articles %}
+        <article class="news-card">
+          <div class="news-thumb">
+            <a href="{{ article.get_absolute_url }}">
+              <img 
+                src="{% if article.featured_image %}{{ article.featured_image.url }}{% else %}{% static 'images/mv_racing_1.jpg' %}{% endif %}" 
+                alt="{{ article.title }}"
+                loading="lazy"
+              >
+            </a>
+          </div>
+
+          <div class="news-body">
+            <div>
+              <div class="news-meta-row">
+                <span class="telemetry-label" style="color: var(--accent-red);">
+                  {{ article.category.name|default:"NEWS" }}
+                </span>
+                <span class="telemetry-label">{{ article.reading_time }}</span>
+              </div>
+
+              <h2 class="news-title">
+                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+              </h2>
+
+              <p class="news-excerpt">{{ article.excerpt }}</p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+              <a href="{{ article.get_absolute_url }}" class="btn-link-editorial">
+                READ FULL STORY <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+        {% empty %}
+        <p style="color: var(--text-secondary); font-family: var(--font-mono);">NO ARTICLES FOUND IN THIS CATEGORY.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

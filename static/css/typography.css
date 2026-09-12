@@ -1,0 +1,167 @@
+/* ==========================================================================
+   MAX VERSTAPPEN — TYPOGRAPHY SYSTEM
+   Modern Grotesk + High Contrast Editorial Hierarchy
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-condensed: 'Anton', 'Bebas Neue', -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hero-title {
+  font-size: var(--text-display-hero);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.section-headline {
+  font-size: var(--text-display-h1);
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+
+.section-subtitle {
+  font-size: var(--text-display-h2);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-secondary);
+}
+
+.card-title {
+  font-size: var(--text-display-h3);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* Editorial Statements */
+.editorial-quote {
+  font-size: clamp(1.4rem, 2.8vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.editorial-lead {
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Telemetry & Micro Typography */
+.telemetry-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.telemetry-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.telemetry-tag.active {
+  background: rgba(225, 6, 0, 0.15);
+  border-color: var(--accent-red);
+  color: #FFF;
+}
+
+.telemetry-tag .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-red);
+  animation: pulse-red 2s infinite ease-in-out;
+}
+
+/* Numerical Data */
+.number-huge {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7vw, 7.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: var(--text-primary);
+}
+
+.number-huge .suffix {
+  color: var(--accent-red);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* Links & Interactive Text */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.nav-link {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  position: relative;
+  padding: 0.5rem 0;
+  display: inline-block;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--text-primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-red);
+  transition: width var(--transition-smooth);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+}

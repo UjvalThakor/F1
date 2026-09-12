@@ -1,0 +1,61 @@
+/* ==========================================================================
+   MAX VERSTAPPEN — ANIMATION SYSTEM & KEYFRAMES
+   ========================================================================== */
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(225, 6, 0, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(225, 6, 0, 0);
+  }
+}
+
+@keyframes bounce-vertical {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(6px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reveal classes for GSAP and CSS fallbacks */
+.reveal-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image reveal clip path effect */
+.reveal-clip {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-clip.is-inview {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

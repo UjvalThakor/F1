@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.title }} — MAX VERSTAPPEN{% endblock %}
+{% block meta_description %}{{ article.excerpt }}{% endblock %}
+
+{% block content %}
+<div style="padding-top: var(--nav-height);">
+  <article class="section" style="padding-bottom: var(--space-md);">
+    <div class="container" style="max-width: 960px;">
+      <!-- Breadcrumb & Telemetry -->
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
+        <a href="{% url 'news_list' %}" class="telemetry-label" style="color: var(--accent-red);">← DISPATCHES</a>
+        <span class="telemetry-label">//</span>
+        <span class="telemetry-label">{{ article.category.name|default:"PRESS" }}</span>
+        <span class="telemetry-label">//</span>
+        <span class="telemetry-label">{{ article.published_at|date:"d M Y"|upper }}</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="section-headline" style="font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.02;">
+        {{ article.title }}
+      </h1>
+
+      <!-- Excerpt -->
+      <p class="editorial-lead" style="font-size: 1.35rem; color: #FFF; margin-bottom: 3rem; border-left: 2px solid var(--accent-red); padding-left: 1.5rem;">
+        {{ article.excerpt }}
+      </p>
+
+      <!-- Featured Image -->
+      <div style="width: 100%; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 3.5rem; border: 1px solid var(--border-subtle);">
+        <img 
+          src="{% if article.featured_image %}{{ article.featured_image.url }}{% else %}{% static 'images/mv_racing_1.jpg' %}{% endif %}" 
+          alt="{{ article.title }}"
+          style="width: 100%; height: auto; max-height: 580px; object-fit: cover; display: block;"
+        >
+      </div>
+
+      <!-- Article Content Body -->
+      <div class="editorial-lead" style="line-height: 1.8; color: var(--text-primary); display: flex; flex-direction: column; gap: 1.75rem;">
+        {{ article.content|linebreaks }}
+      </div>
+
+      <div style="margin-top: 4rem; border-top: 1px solid var(--border-subtle); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <a href="{% url 'news_list' %}" class="btn btn-secondary">
+          ← BACK TO STORIES
+        </a>
+
+        <div class="telemetry-tag">
+          SHARE // TELEMETRY LINK
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Related Stories -->
+  {% if related_articles %}
+  <section class="section" style="background: var(--bg-secondary); border-top: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="section-meta-top" style="margin-bottom: 2rem;">
+        <span class="section-index">RELATED //</span>
+        <span class="telemetry-label">MORE STORIES</span>
+      </div>
+
+      <div class="news-grid">
+        {% for rel in related_articles %}
+        <article class="news-card">
+          <div class="news-thumb">
+            <a href="{{ rel.get_absolute_url }}">
+              <img src="{% if rel.featured_image %}{{ rel.featured_image.url }}{% else %}{% static 'images/mv_racing_1.jpg' %}{% endif %}" alt="{{ rel.title }}">
+            </a>
+          </div>
+          <div class="news-body">
+            <h3 class="news-title"><a href="{{ rel.get_absolute_url }}">{{ rel.title }}</a></h3>
+            <a href="{{ rel.get_absolute_url }}" class="btn-link-editorial">READ STORY <span class="arrow">→</span></a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

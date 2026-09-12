@@ -1,0 +1,376 @@
+{% load static %}
+<!-- ==========================================================================
+     CAREER STORY / TIMELINE SECTION — VERTICAL SCROLL (EXACT NICK HO COMPOSITION)
+     ========================================================================== -->
+<style>
+  .section_about {
+    position: relative;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    z-index: 2;
+  }
+
+  /* 3-Column Pinned Viewport Frame */
+  .about_sticky_viewport {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 clamp(3.5rem, 7.5vw, 9rem);
+    box-sizing: border-box;
+    margin-bottom: -100vh; /* Lets center images scroll continuously behind */
+  }
+
+  /* Left Column: Titles (Shifted to left side with subtle slide) */
+  .about_col_left {
+    width: clamp(240px, 22vw, 360px);
+    position: relative;
+    height: 160px;
+    display: flex;
+    align-items: center;
+  }
+
+  .about_heading_item {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(-24px);
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+  }
+
+  .about_heading_item.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .story-heading {
+    font-family: var(--font-display, 'Oswald', sans-serif);
+    font-size: clamp(2.2rem, 3.8vw, 4.2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  /* Right Column: Descriptions (Pushed to the side with subtle slide) */
+  .about_col_right {
+    width: clamp(260px, 23vw, 380px);
+    position: relative;
+    height: 240px;
+    display: flex;
+    align-items: center;
+  }
+
+  .about_sticky_item {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(24px);
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+  }
+
+  .about_sticky_item.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .about_sticky_item p {
+    font-size: clamp(0.92rem, 1.02vw, 1.08rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 400;
+    margin: 0;
+  }
+
+  /* Bottom Right Counter */
+  .about_count_wrapper {
+    position: absolute;
+    bottom: clamp(2rem, 5vh, 4rem);
+    right: clamp(3.5rem, 7.5vw, 9rem);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 15;
+  }
+
+  .about_count_svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  .about_count_text {
+    font-family: var(--font-mono, monospace);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  /* Center Skip Button */
+  .about_skip_wrapper {
+    position: absolute;
+    bottom: clamp(2rem, 5vh, 4rem);
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    z-index: 20;
+  }
+
+  .about_skip_btn {
+    background-color: #fed60a;
+    color: #0b0c10;
+    font-family: var(--font-display, 'Oswald', sans-serif);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0.75rem 2.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(254, 214, 10, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    transition: transform 0.25s ease, background-color 0.25s, box-shadow 0.25s;
+  }
+
+  .about_skip_btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    background-color: #ffe600;
+    box-shadow: 0 12px 30px rgba(254, 214, 10, 0.5);
+  }
+
+  /* Center Scrolling Image Track */
+  .about_images_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about_images_track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16rem;
+    width: 100%;
+    max-width: 360px;
+    padding-top: calc(50vh - 180px);
+    padding-bottom: calc(50vh - 180px);
+  }
+
+  .about_image_wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #0d0e12;
+    opacity: 0.2;
+    filter: saturate(0);
+    transform: scale(0.96);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .about_image_wrapper.is-active {
+    opacity: 1;
+    filter: saturate(1);
+    transform: scale(1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(254, 214, 10, 0.15);
+  }
+
+  .about_image_wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 991px) {
+    .about_sticky_viewport {
+      display: none;
+    }
+    .about_images_track {
+      padding: 3rem 1.5rem;
+      gap: 4rem;
+      max-width: 540px;
+    }
+    .about_image_wrapper {
+      opacity: 1;
+      filter: saturate(1);
+      transform: none;
+    }
+  }
+</style>
+
+<section class="section_about" id="career">
+  
+  <!-- PINNED 100VH VIEWPORT OVERLAY (Titles, Descriptions, Skip & Counter) -->
+  <div class="about_sticky_viewport">
+    
+    <!-- LEFT COLUMN: Titles -->
+    <div class="about_col_left">
+      <div class="about_heading_item is-active" data-about-title-item="0">
+        <h2 class="story-heading">THE PRODIGY</h2>
+      </div>
+      <div class="about_heading_item" data-about-title-item="1">
+        <h2 class="story-heading">MAIDEN VICTORY</h2>
+      </div>
+      <div class="about_heading_item" data-about-title-item="2">
+        <h2 class="story-heading">WORLD CHAMPION</h2>
+      </div>
+      <div class="about_heading_item" data-about-title-item="3">
+        <h2 class="story-heading">ERA OF DOMINANCE</h2>
+      </div>
+      <div class="about_heading_item" data-about-title-item="4">
+        <h2 class="story-heading">LIVING LEGEND</h2>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Paragraphs -->
+    <div class="about_col_right">
+      <div class="about_sticky_item is-active" data-about-content-item="0">
+        <p>Born into a racing dynasty, Max began karting at just four years old under the mentorship of his father, ex-F1 driver Jos Verstappen. By 2013, he achieved a historic double, winning both the European and World KZ Championships at age 15—one of the most dominant karting records in motorsport history.</p>
+      </div>
+      <div class="about_sticky_item" data-about-content-item="1">
+        <p>In 2015, Max debuted with Scuderia Toro Rosso at just 17 years and 166 days as the youngest driver in F1 history. Promoted to Red Bull Racing ahead of the 2016 Spanish Grand Prix, he delivered an astonishing drive to claim victory on his team debut, becoming the youngest Grand Prix winner at 18 years and 228 days.</p>
+      </div>
+      <div class="about_sticky_item" data-about-content-item="2">
+        <p>In 2021, Verstappen engaged in one of the most intense title battles in Formula 1 history. Driving the Red Bull RB16B, he claimed 10 wins, 18 podiums, and 10 pole positions. With a thrilling last-lap overtake at Abu Dhabi, he clinched his maiden FIA Formula 1 World Championship, becoming the first Dutch champion.</p>
+      </div>
+      <div class="about_sticky_item" data-about-content-item="3">
+        <p>In Formula 1’s ground-effect era, Verstappen achieved unparalleled dominance. In 2023, he shattered records with 19 wins in 22 races and 10 consecutive victories. In 2024, he clinched his fourth consecutive World Drivers' Championship, joining Fangio, Prost, Schumacher, Vettel, and Hamilton among racing legends.</p>
+      </div>
+      <div class="about_sticky_item" data-about-content-item="4">
+        <p>With over 60 Grand Prix victories, four consecutive World Drivers' Championships, and surgical precision in all conditions, Max Verstappen continues to define the pinnacle of Formula 1. Relentless, uncompromising, and faster than ever, his legacy is already etched in motorsport history.</p>
+      </div>
+    </div>
+
+    <!-- Center Skip Button -->
+    <div class="about_skip_wrapper">
+      <a href="#races" class="about_skip_btn" id="storySkipBtn">
+        SKIP &gt;&gt;
+      </a>
+    </div>
+
+    <!-- Bottom Right Counter -->
+    <div class="about_count_wrapper">
+      <svg class="about_count_svg" viewBox="0 0 22 22" width="22" height="22" fill="none">
+        <rect width="11" height="11" fill="#FED60A"></rect>
+        <rect x="11" y="11" width="11" height="11" fill="#FED60A"></rect>
+      </svg>
+      <div class="about_count_text">
+        <span data-about-count="count">1</span>/<span data-about-count="total">5</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENTER: Naturally Scrolling Images Track -->
+  <div class="about_images_container">
+    <div class="about_images_track">
+      <div class="about_image_wrapper is-active" data-about-image="0">
+        <img src="{% static 'images/mv_karting.png' %}" alt="Max Verstappen - Karting Prodigy" loading="eager">
+      </div>
+      <div class="about_image_wrapper" data-about-image="1">
+        <img src="{% static 'images/mv_story_2.png' %}" alt="Max Verstappen - Maiden F1 Victory" loading="lazy">
+      </div>
+      <div class="about_image_wrapper" data-about-image="2">
+        <img src="{% static 'images/mv_story_3.png' %}" alt="Max Verstappen - World Champion" loading="lazy">
+      </div>
+      <div class="about_image_wrapper" data-about-image="3">
+        <img src="{% static 'images/mv_story_4.png' %}" alt="Max Verstappen - 4x World Champion" loading="lazy">
+      </div>
+      <div class="about_image_wrapper" data-about-image="4">
+        <img src="{% static 'images/mv_story_5.jpg' %}" alt="Max Verstappen - Living Legend Trophy" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  function initStoryScroll() {
+    const section = document.querySelector('.section_about');
+    if (!section) return;
+
+    const images = Array.from(section.querySelectorAll('[data-about-image]'));
+    const titles = Array.from(section.querySelectorAll('[data-about-title-item]'));
+    const contents = Array.from(section.querySelectorAll('[data-about-content-item]'));
+    const countEl = section.querySelector('[data-about-count="count"]');
+    const totalEl = section.querySelector('[data-about-count="total"]');
+
+    if (totalEl && images.length) {
+      totalEl.textContent = images.length;
+    }
+
+    let currentIndex = -1;
+
+    function updateActive() {
+      const triggerY = window.innerHeight * 0.5;
+      let newIndex = 0;
+
+      images.forEach((img, idx) => {
+        const rect = img.getBoundingClientRect();
+        if (rect.top <= triggerY) {
+          newIndex = idx;
+        }
+      });
+
+      if (newIndex !== currentIndex) {
+        currentIndex = newIndex;
+
+        images.forEach((img, idx) => {
+          img.classList.toggle('is-active', idx === currentIndex);
+        });
+
+        titles.forEach((title, idx) => {
+          title.classList.toggle('is-active', idx === currentIndex);
+        });
+
+        contents.forEach((content, idx) => {
+          content.classList.toggle('is-active', idx === currentIndex);
+        });
+
+        if (countEl) {
+          countEl.textContent = currentIndex + 1;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    window.addEventListener('resize', updateActive, { passive: true });
+    updateActive();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStoryScroll);
+  } else {
+    initStoryScroll();
+  }
+})();
+</script>

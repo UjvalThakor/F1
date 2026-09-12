@@ -1,0 +1,89 @@
+{% load static %}
+<section class="section" id="next-race" style="padding-bottom: 0;">
+  <div class="container">
+    <div class="section-meta-top" style="margin-bottom: 1.5rem;">
+      <span class="section-index">04 // TELEMETRY</span>
+      <span class="telemetry-label">COUNTDOWN TO RACE LIGHTS</span>
+    </div>
+
+    {% if next_race %}
+    <div class="next-race-hud">
+      <!-- HUD Top Bar -->
+      <div class="hud-top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div class="telemetry-tag active">
+            <span class="dot"></span> {{ next_race.round_formatted }}
+          </div>
+          <div class="telemetry-label" style="color: #FFF;">
+            {{ next_race.country|upper }} // {{ next_race.city|upper }}
+          </div>
+        </div>
+
+        <div id="cdStatusLabel" class="telemetry-label" style="color: var(--accent-red); font-weight: 700;">
+          LIVE TELEMETRY COUNTDOWN
+        </div>
+      </div>
+
+      <!-- HUD Main Grid -->
+      <div class="hud-grid">
+        <div>
+          <h2 class="hud-gp-title">{{ next_race.name|upper }}</h2>
+          <div class="hud-circuit-name">{{ next_race.circuit }} • {{ next_race.formatted_date_range }}</div>
+
+          <!-- Countdown Timer -->
+          <div 
+            class="countdown-clock" 
+            id="raceCountdownClock" 
+            data-target="{{ next_race.race_time_utc|date:'c' }}"
+          >
+            <div class="countdown-unit">
+              <span class="digit" id="cdDays">00</span>
+              <span class="unit-label">DAYS</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="digit" id="cdHours">00</span>
+              <span class="unit-label">HOURS</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="digit" id="cdMinutes">00</span>
+              <span class="unit-label">MINUTES</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="digit" id="cdSeconds">00</span>
+              <span class="unit-label">SECONDS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track Specs -->
+        <div class="hud-telemetry-specs">
+          <div class="spec-item">
+            <span class="telemetry-label">SCHEDULED LAPS</span>
+            <span class="spec-val">{{ next_race.laps }} LAPS</span>
+          </div>
+          <div class="spec-item">
+            <span class="telemetry-label">TRACK LENGTH</span>
+            <span class="spec-val">{{ next_race.circuit_length }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="telemetry-label">LAP RECORD</span>
+            <span class="spec-val">{{ next_race.lap_record|default:"1:11.097" }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="telemetry-label">TARGET STRATEGY</span>
+            <span class="spec-val" style="color: var(--accent-red);">VICTORY / P1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="next-race-hud">
+      <h2 class="hud-gp-title">MONACO GRAND PRIX</h2>
+      <div class="hud-circuit-name">CIRCUIT DE MONACO • 2026 CALENDAR</div>
+      <div class="telemetry-label" style="color: var(--accent-red); margin-top: 1rem;">
+        CALENDAR INITIALIZATION IN PROGRESS
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>

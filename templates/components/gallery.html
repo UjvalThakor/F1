@@ -1,0 +1,113 @@
+{% load static %}
+<section class="section section-photo-gallery" id="gallery">
+  <!-- GALLERY watermark -->
+  <div class="photo-gallery-watermark" aria-hidden="true">GALLERY</div>
+
+  <!-- Main Featured Image Viewer -->
+  <div class="photo-gallery-main-wrap">
+    <div class="photo-gallery-main" id="galleryMainFrame">
+      <!-- Main Image -->
+      <img
+        src="{% static 'images/mv_celebrate_zandvoort.jpg' %}"
+        alt="Max Verstappen Gallery"
+        class="photo-gallery-main-img"
+        id="galleryMainImg"
+      >
+      <!-- Caption Overlay -->
+      <div class="photo-gallery-caption" id="galleryCaption">
+        <span class="gallery-caption-index" id="galleryCaptionIdx">01 / 06</span>
+        <span class="gallery-caption-title" id="galleryCaptionTitle">ZANDVOORT TRIUMPH</span>
+        <span class="gallery-caption-meta" id="galleryCaptionMeta">HOME GRAND PRIX</span>
+      </div>
+      <!-- Prev / Next arrows -->
+      <button class="photo-gallery-arrow arrow-prev" id="galleryPrev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="photo-gallery-arrow arrow-next" id="galleryNext" aria-label="Next photo">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Thumbnail Strip -->
+  <div class="photo-gallery-thumbs" id="galleryThumbs">
+    <div class="photo-gallery-thumbs-track" id="galleryThumbsTrack">
+      <button class="gallery-thumb active" data-idx="0" aria-label="Gallery photo 1">
+        <img src="{% static 'images/mv_celebrate_zandvoort.jpg' %}" alt="Zandvoort Triumph" loading="lazy">
+      </button>
+      <button class="gallery-thumb" data-idx="1" aria-label="Gallery photo 2">
+        <img src="{% static 'images/mv_celebrate_austria2022.jpg' %}" alt="Austrian GP Victory" loading="lazy">
+      </button>
+      <button class="gallery-thumb" data-idx="2" aria-label="Gallery photo 3">
+        <img src="{% static 'images/mv_monaco_win_hd.jpg' %}" alt="Monaco Victory" loading="lazy">
+      </button>
+      <button class="gallery-thumb" data-idx="3" aria-label="Gallery photo 4">
+        <img src="{% static 'images/mv_story_champagne.jpg' %}" alt="Champagne Celebration" loading="lazy">
+      </button>
+      <button class="gallery-thumb" data-idx="4" aria-label="Gallery photo 5">
+        <img src="{% static 'images/mv_brazil_win.jpg' %}" alt="Brazil Win" loading="lazy">
+      </button>
+      <button class="gallery-thumb" data-idx="5" aria-label="Gallery photo 6">
+        <img src="{% static 'images/mv_celebrate_car_jump.jpg' %}" alt="Car Celebration" loading="lazy">
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const SLIDES = [
+    { src: "{% static 'images/mv_celebrate_zandvoort.jpg' %}", title: "ZANDVOORT TRIUMPH", meta: "HOME GRAND PRIX" },
+    { src: "{% static 'images/mv_celebrate_austria2022.jpg' %}", title: "AUSTRIAN GP VICTORY", meta: "RED BULL RING 2022" },
+    { src: "{% static 'images/mv_monaco_win_hd.jpg' %}", title: "MONACO VICTORY", meta: "CIRCUIT DE MONACO" },
+    { src: "{% static 'images/mv_story_champagne.jpg' %}", title: "CHAMPAGNE CELEBRATION", meta: "PODIUM GLORY" },
+    { src: "{% static 'images/mv_brazil_win.jpg' %}", title: "BRAZIL GP WIN", meta: "INTERLAGOS 2023" },
+    { src: "{% static 'images/mv_celebrate_car_jump.jpg' %}", title: "PARC FERMÉ CELEBRATION", meta: "CHAMPIONSHIP MOMENT" }
+  ];
+
+  let current = 0;
+
+  const mainImg   = document.getElementById('galleryMainImg');
+  const capIdx    = document.getElementById('galleryCaptionIdx');
+  const capTitle  = document.getElementById('galleryCaptionTitle');
+  const capMeta   = document.getElementById('galleryCaptionMeta');
+  const prevBtn   = document.getElementById('galleryPrev');
+  const nextBtn   = document.getElementById('galleryNext');
+  const thumbBtns = document.querySelectorAll('.gallery-thumb');
+
+  function goTo(idx) {
+    current = (idx + SLIDES.length) % SLIDES.length;
+    const slide = SLIDES[current];
+
+    // Fade out → update → fade in
+    mainImg.style.opacity = '0';
+    setTimeout(function() {
+      mainImg.src = slide.src;
+      mainImg.onload = function() { mainImg.style.opacity = '1'; };
+      // Fallback if already cached
+      if (mainImg.complete) mainImg.style.opacity = '1';
+    }, 220);
+
+    capIdx.textContent   = String(current + 1).padStart(2, '0') + ' / ' + String(SLIDES.length).padStart(2, '0');
+    capTitle.textContent = slide.title;
+    capMeta.textContent  = slide.meta;
+
+    thumbBtns.forEach(function(btn) { btn.classList.remove('active'); });
+    if (thumbBtns[current]) thumbBtns[current].classList.add('active');
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
+
+  thumbBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() { goTo(parseInt(btn.getAttribute('data-idx'))); });
+  });
+
+  // Auto-advance every 5 seconds
+  setInterval(function() { goTo(current + 1); }, 5000);
+})();
+</script>

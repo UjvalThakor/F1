@@ -1,0 +1,139 @@
+{% load static %}
+<section class="section section-contact" id="contact">
+  <!-- Subtle decorative vertical grid lines -->
+  <div class="contact-bg-grid-lines" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Massive Background Watermark -->
+  <div class="contact-watermark" aria-hidden="true">CONTACT</div>
+
+  <div class="container contact-container">
+    <!-- High-Contrast Floating White Card -->
+    <div class="contact-card-box">
+      <!-- Left Column: Headline & Direct Info -->
+      <div class="contact-card-sidebar">
+        <div>
+          <span class="contact-card-badge">GET IN TOUCH</span>
+          <h2 class="contact-card-headline">CONTACT</h2>
+          <p class="contact-card-desc">
+            Ready to collaborate, explore commercial sponsorship opportunities, or have press inquiries? Send a transmission directly to driver management.
+          </p>
+        </div>
+
+        <div class="contact-card-meta-list">
+          <div class="contact-meta-entry">
+            <span class="meta-entry-label">DIRECT INQUIRIES</span>
+            <a href="mailto:{{ site_settings.contact_email|default:'contact@verstappen.com' }}" class="meta-entry-value">
+              {{ site_settings.contact_email|default:"contact@verstappen.com" }}
+            </a>
+          </div>
+
+          <div class="contact-meta-entry">
+            <span class="meta-entry-label">MANAGEMENT BASE</span>
+            <span class="meta-entry-value">ROTTERDAM // MONACO</span>
+          </div>
+
+          <div class="contact-meta-entry">
+            <span class="meta-entry-label">RACE SERIES</span>
+            <span class="meta-entry-value">PORSCHE CARRERA CUP &bull; SUPERCUP</span>
+          </div>
+        </div>
+
+        <div class="contact-status-tag">
+          <span class="status-dot"></span>
+          <span>OFFICIAL CHANNELS ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Clean Form Fields -->
+      <div class="contact-card-form-area">
+        <form id="contactFormAjax" method="POST" action="{% url 'contact' %}" class="contact-ajax-form">
+          {% csrf_token %}
+          <!-- Anti-spam Honeypot -->
+          <input type="text" name="bot_catcher" style="display:none;" tabindex="-1" autocomplete="off">
+
+          <div class="contact-form-row">
+            <div class="contact-field-group">
+              <label for="id_first_name" class="contact-field-label">FIRST NAME *</label>
+              <input 
+                type="text" 
+                id="id_first_name" 
+                name="first_name" 
+                class="contact-form-input" 
+                placeholder="John" 
+                required 
+                autocomplete="given-name"
+              >
+            </div>
+            <div class="contact-field-group">
+              <label for="id_last_name" class="contact-field-label">LAST NAME *</label>
+              <input 
+                type="text" 
+                id="id_last_name" 
+                name="last_name" 
+                class="contact-form-input" 
+                placeholder="Doe" 
+                required 
+                autocomplete="family-name"
+              >
+            </div>
+          </div>
+
+          <div class="contact-field-group">
+            <label for="id_email" class="contact-field-label">EMAIL ADDRESS *</label>
+            <input 
+              type="email" 
+              id="id_email" 
+              name="email" 
+              class="contact-form-input" 
+              placeholder="johndoe@example.com" 
+              required 
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="contact-field-group">
+            <label for="id_subject" class="contact-field-label">TOPIC OF INTEREST *</label>
+            <div class="contact-select-wrap">
+              <select id="id_subject" name="subject" class="contact-form-select" required>
+                <option value="partnership">BRAND SPONSORSHIP & PARTNERSHIP</option>
+                <option value="media">PRESS & MEDIA INQUIRY</option>
+                <option value="hospitality">VIP RACE HOSPITALITY</option>
+                <option value="general">GENERAL TRANSMISSION</option>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <div class="contact-field-group">
+            <label for="id_message" class="contact-field-label">YOUR MESSAGE *</label>
+            <textarea 
+              id="id_message" 
+              name="message" 
+              class="contact-form-textarea" 
+              rows="4" 
+              placeholder="Type your message here..." 
+              required
+            ></textarea>
+          </div>
+
+          <div class="contact-submit-row">
+            <button type="submit" class="btn-contact-submit" id="contactSubmitBtn">
+              <span>SUBMIT</span>
+              <span class="submit-arrow">&raquo;</span>
+            </button>
+          </div>
+
+          <div id="contactFeedback" class="contact-form-feedback" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,349 @@
+/* ==========================================================================
+   MAX VERSTAPPEN — RESPONSIVE DESIGN (1440, 1280, 1024, 768, 480, 390, 360)
+   ========================================================================== */
+
+/* 1440px and below */
+@media (max-width: 1440px) {
+  :root {
+    --container-max: 1360px;
+  }
+}
+
+/* 1280px and below */
+@media (max-width: 1280px) {
+  :root {
+    --container-max: 1180px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .partners-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 1024px and below (Tablet Landscape / Port) */
+@media (max-width: 1024px) {
+  .nav-menu, .nav-social-icons {
+    display: none;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+  
+  .editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .hud-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hud-telemetry-specs {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+  
+  .masonry-grid {
+    column-count: 2;
+  }
+  
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .contact-card-box {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card-sidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .footer-main-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .calendar-row {
+    grid-template-columns: 80px 1.4fr 1fr 100px;
+  }
+  .calendar-row .cal-date {
+    display: none;
+  }
+}
+
+/* 768px and below (Mobile Landscape / Large Phones) */
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 4.5rem;
+    --space-lg: 3rem;
+  }
+  
+  .hero-reference-container {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+  .hero-main-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-stats-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .hero-right-col {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .hero-right-bio {
+    align-items: flex-start;
+  }
+  .hero-bio-stack {
+    text-align: left;
+  }
+  .hero-countdown-box {
+    align-items: flex-start;
+  }
+  .hero-giant-number {
+    font-size: clamp(8rem, 25vw, 15rem);
+    opacity: 0.15;
+    top: 40%;
+    left: 50%;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-left: 1rem;
+  }
+  .timeline-year {
+    font-size: 2rem;
+  }
+  
+  .countdown-clock {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .calendar-row {
+    grid-template-columns: 60px 1fr auto;
+    gap: 0.75rem;
+    padding: 1.25rem 0.5rem;
+  }
+  .cal-gp-circuit {
+    display: none;
+  }
+  
+  .masonry-grid {
+    column-count: 1;
+  }
+  
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+/* 480px and below (Compact Mobile / 390px / 360px) */
+@media (max-width: 480px) {
+  :root {
+    --container-gutter: 1.25rem;
+    --space-xl: 3.75rem;
+  }
+
+  .site-nav {
+    height: 68px;
+  }
+
+  .brand-name {
+    font-size: 0.92rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 13vw, 4.5rem);
+  }
+
+  .editorial-quote {
+    font-size: 1.35rem;
+  }
+
+  .countdown-unit {
+    padding: 1rem 0.5rem;
+  }
+
+  .countdown-unit .digit {
+    font-size: 1.85rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Sprint 2 Component Responsive Optimizations */
+@media (max-width: 900px) {
+  .progress-big-text {
+    font-size: clamp(2rem, 5.2vw, 3.8rem);
+    line-height: 1.08;
+  }
+  .progress-helmet-wrapper {
+    width: clamp(200px, 30vw, 320px);
+  }
+  .card-top-left {
+    top: 20px;
+    left: 20px;
+    width: 180px;
+  }
+  .card-bottom-right {
+    bottom: 20px;
+    right: 20px;
+    width: 180px;
+  }
+  .gallery-arc-stage {
+    height: 400px;
+  }
+  .gallery-arc-card.card-center {
+    width: 270px;
+    height: 330px;
+  }
+  .gallery-arc-card.card-left,
+  .gallery-arc-card.card-right {
+    width: 220px;
+    height: 270px;
+    top: 110px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-driven-progress {
+    padding: 70px 0 90px;
+    min-height: auto;
+  }
+  .progress-big-text {
+    font-size: clamp(1.65rem, 6.2vw, 2.5rem);
+    line-height: 1.1;
+  }
+  .progress-helmet-wrapper {
+    width: 180px;
+  }
+  .progress-floating-card {
+    opacity: 0.85;
+  }
+  .card-top-left {
+    top: 10px;
+    left: 10px;
+    width: 110px;
+  }
+  .card-bottom-right {
+    bottom: 10px;
+    right: 10px;
+    width: 110px;
+  }
+  .gallery-arc-stage {
+    height: 320px;
+  }
+  .gallery-arc-card.card-center {
+    width: 200px;
+    height: 250px;
+  }
+  .gallery-arc-card.card-left {
+    width: 150px;
+    height: 190px;
+    left: 15%;
+    top: 80px;
+  }
+  .gallery-arc-card.card-right {
+    width: 150px;
+    height: 190px;
+    left: 85%;
+    top: 80px;
+  }
+  .media-articles-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .media-nav-controls {
+    align-self: flex-end;
+  }
+  .btn-sponsor-guide {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 20px;
+  }
+  .contact-form-row {
+    grid-template-columns: 1fr;
+  }
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .partners-5col-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .col-center-helmet {
+    order: -1;
+  }
+  .partners-helmet-anchor {
+    width: clamp(200px, 45vw, 260px);
+  }
+  .partners-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0;
+  }
+  .partner-brand-slot {
+    width: auto;
+    padding: 0.5rem 1rem;
+  }
+}
+

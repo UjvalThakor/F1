@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_title|default:"NICK HO — OFFICIAL MOTORSPORTS" }}{% endblock %}
+
+{% block content %}
+<!-- 1. FULLSCREEN CINEMATIC HERO -->
+{% include 'components/hero.html' %}
+
+<!-- 2. DRIVER STATEMENT & DRIVEN BY PROGRESS -->
+{% include 'components/statement.html' %}
+
+<!-- 3. PARTNERS & HELMET SHOWCASE -->
+{% include 'components/partners.html' %}
+
+<!-- 4. CAREER STORY HORIZONTAL PINNED SLIDER -->
+{% include 'components/timeline.html' %}
+
+<!-- 5. RACE CALENDAR PINNED CAR PARALLAX -->
+{% include 'components/calendar.html' %}
+
+<!-- 6. MEDIA & ARTICLES HORIZONTAL SLIDER -->
+{% include 'components/news.html' %}
+
+<!-- 7. SPONSORSHIP GUIDE CTA -->
+{% include 'components/sponsor_cta.html' %}
+
+<!-- 8. FULL-WIDTH CINEMATIC VIDEO SHOWCASE -->
+{% include 'components/video.html' %}
+
+<!-- 9. CURVED ARC GALLERY WITH SPEEDOMETER DIAL -->
+{% include 'components/gallery.html' %}
+
+<!-- 10. CONTACT SECTION -->
+{% include 'components/contact.html' %}
+{% endblock %}

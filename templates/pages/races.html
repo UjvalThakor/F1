@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}RACE CALENDAR & TELEMETRY — MAX VERSTAPPEN{% endblock %}
+
+{% block content %}
+<div style="padding-top: var(--nav-height);">
+  {% include 'components/hud.html' %}
+  {% include 'components/calendar.html' %}
+</div>
+{% endblock %}

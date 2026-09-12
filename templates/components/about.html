@@ -1,0 +1,71 @@
+{% load static %}
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header with-action">
+      <div>
+        <div class="section-meta-top">
+          <span class="section-index">02 // ARCHIVE</span>
+          <span class="telemetry-label">THE CHAMPION'S DNA</span>
+        </div>
+        <h2 class="section-headline">THE DRIVER & THE CRAFT</h2>
+      </div>
+
+      <div class="telemetry-tag">
+        ORACLE RED BULL RACING RB20 / RB21
+      </div>
+    </div>
+
+    <!-- Editorial Pillars Grid -->
+    <div class="pillars-grid">
+      {% for pillar in pillars %}
+      <div class="pillar-card">
+        <div>
+          <div class="pillar-number">PILLAR // 0{{ forloop.counter }}</div>
+          <h3 class="pillar-title">{{ pillar.title }}</h3>
+          {% if pillar.subtitle %}
+          <div class="pillar-subtitle">{{ pillar.subtitle }}</div>
+          {% endif %}
+          <p class="pillar-desc">{{ pillar.description }}</p>
+        </div>
+
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+          <span class="telemetry-label" style="color: var(--accent-red);">FOCUS // EXCELLENCE</span>
+        </div>
+      </div>
+      {% empty %}
+      <div class="pillar-card">
+        <div>
+          <div class="pillar-number">PILLAR // 01</div>
+          <h3 class="pillar-title">THE DRIVER</h3>
+          <div class="pillar-subtitle">PURE INSTINCT</div>
+          <p class="pillar-desc">Born with racing in his veins, Max possesses an instinctive spatial awareness and tire management ability that allows him to extract 100% from any machinery in any atmospheric condition.</p>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div>
+          <div class="pillar-number">PILLAR // 02</div>
+          <h3 class="pillar-title">THE MINDSET</h3>
+          <div class="pillar-subtitle">UNWAVERING RESOLVE</div>
+          <p class="pillar-desc">Unfazed by noise, politics, or external expectations. Verstappen enters every race weekend with singular tunnel vision: total execution from FP1 through the checkered flag.</p>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div>
+          <div class="pillar-number">PILLAR // 03</div>
+          <h3 class="pillar-title">THE DISCIPLINE</h3>
+          <div class="pillar-subtitle">RELENTLESS SIMULATOR RUNS</div>
+          <p class="pillar-desc">When not at an F1 circuit, Max is logging hundreds of laps on professional sim rigs and competing in endurance esports races, refining brake-bias modulation and setup balance constantly.</p>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div>
+          <div class="pillar-number">PILLAR // 04</div>
+          <h3 class="pillar-title">THE COMPETITION</h3>
+          <div class="pillar-subtitle">WHEEL-TO-WHEEL MASTERY</div>
+          <p class="pillar-desc">Aggressive yet precise. Defending lines with clinical ruthlessness and lunging down the inside with absolute commitment. A benchmark driver of his generation.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,134 @@
+{% load static %}
+<!-- ==========================================================================
+     RACE CALENDAR — NICK HO MOTORSPORTS RACING LIST & MOVEABLE CAR SECTION
+     ========================================================================== -->
+<section class="section_agenda section_calendar_parallax" id="races" data-agenda="start" data-parallax="trigger">
+  <!-- Fixed Central Moveable Car Stage (Exact Nick Ho Composition) -->
+  <div class="agenda_sticky_wrapper" id="agendaStickyWrapper">
+    <div class="agenda_sticky" id="agendaSticky" data-parallax="target">
+      <img 
+        src="{% static 'images/redbull_topdown_facing_down.png' %}?v=3" 
+        alt="Max Verstappen Red Bull Racing Formula 1 Car" 
+        class="agenda_car_image" 
+        id="agendaCarImage"
+        data-agenda="car"
+        loading="eager"
+      />
+    </div>
+  </div>
+
+  <div class="container agenda_content_container">
+    <!-- Monumental Header: RACES 2026 Split around Car -->
+    <div class="agenda_header_wrap">
+      <div class="agenda_title_split">
+        <span class="agenda_heading_word">RACES</span>
+        <span class="agenda_heading_year">2026</span>
+      </div>
+    </div>
+
+    <!-- Racing Schedule List matching reference screenshot -->
+    <div class="agenda_collection" data-agenda="end">
+      <div class="agenda_list" id="agendaList">
+      <!-- 1. Circuit Ricardo Tormo (Default Active on Entry) -->
+      <div class="agenda_item is-active" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 3 - CIRCUIT RICARDO TORMO</h3>
+          <div class="agenda_subtitle">Porsche Sprint Challenge Southern Europe</div>
+        </div>
+        <div class="agenda_date">20-21.02.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 2. Barcelona-Catalunya -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 4 - CIRCUIT DE BARCELONA-CATALUNYA</h3>
+          <div class="agenda_subtitle">Porsche Sprint Challenge Southern Europe</div>
+        </div>
+        <div class="agenda_date">27-28.02.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 3. Imola -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 1 - WEC IMOLA</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">17-19.04.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 4. Red Bull Ring -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 2 - DTM RED BULL RING</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">24-26.04.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 5. Spa-Francorchamps -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 3 - GT OPEN SPA-FRANCORCHAMPS</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">15-17.05.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 6. Zandvoort DTM -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 4 - DTM ZANDVOORT</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">22-24.05.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 7. Lausitzring -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 5 - DTM LAUSITZRING</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">19-21.06.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 8. Nürburgring -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 7 - DTM NÜRBURGRING</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">14-16.08.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 9. Circuit Zandvoort Supercup -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 6 - CIRCUIT ZANDVOORT</h3>
+          <div class="agenda_subtitle">Porsche Mobil 1 Supercup - Last edition</div>
+        </div>
+        <div class="agenda_date">21-23.08.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+
+      <!-- 10. Hockenheim -->
+      <div class="agenda_item" data-agenda="item">
+        <div class="agenda_left">
+          <h3 class="agenda_title">RACE 8 - DTM HOCKENHEIM</h3>
+          <div class="agenda_subtitle">Porsche Sixt Carrera Cup Deutschland</div>
+        </div>
+        <div class="agenda_date">09-11.10.2026</div>
+        <div class="agenda_line" data-agenda="line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

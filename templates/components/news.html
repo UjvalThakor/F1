@@ -1,0 +1,84 @@
+{% load static %}
+<section class="section section-media-articles" id="news">
+  <!-- Massive Background Watermark -->
+  <div class="media-articles-watermark" aria-hidden="true">MEDIA & ARTICLES</div>
+
+  <div class="container media-articles-container">
+    <div class="media-articles-header">
+      <h2 class="media-articles-title">MEDIA & ARTICLES</h2>
+      <div class="media-nav-controls">
+        <button class="media-nav-btn media-nav-prev" id="mediaArticlesPrev" aria-label="Previous articles">«</button>
+        <button class="media-nav-btn media-nav-next" id="mediaArticlesNext" aria-label="Next articles">»</button>
+      </div>
+    </div>
+
+    <div class="media-articles-slider" id="mediaArticlesSlider">
+      <div class="media-articles-track">
+        <article class="media-article-card">
+          <a href="#contact" class="media-card-link">
+            <div class="media-card-thumb">
+              <img src="{% static 'images/max_car_real.jpg' %}" alt="Autocoureur Nick Ho boekt eerste overwinning" loading="lazy">
+              <div class="media-card-badge">BENELUX CUP</div>
+            </div>
+            <div class="media-card-content">
+              <h3 class="media-card-title">Autocoureur Nick Ho boekt eerste overwinning in Porsche Carrera Cup Benelux! "Mega start"</h3>
+              <p class="media-card-meta">28 AUGUSTUS 2024 &bull; 4 MIN READ</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-article-card">
+          <a href="#contact" class="media-card-link">
+            <div class="media-card-thumb">
+              <img src="{% static 'images/max_portrait_real.jpg' %}" alt="Nick Ho pakt zege tijdens de Racing Day" loading="lazy">
+              <div class="media-card-badge">ASSEN</div>
+            </div>
+            <div class="media-card-content">
+              <h3 class="media-card-title">Nick Ho pakt zege tijdens de Racing Day op Assen voor 90.000 toeschouwers</h3>
+              <p class="media-card-meta">12 JULI 2024 &bull; 3 MIN READ</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-article-card">
+          <a href="#contact" class="media-card-link">
+            <div class="media-card-thumb">
+              <img src="{% static 'images/mv_rb20_hires.jpg' %}" alt="Autocoureur Nick Ho pakt knap podium" loading="lazy">
+              <div class="media-card-badge">PODIUM</div>
+            </div>
+            <div class="media-card-content">
+              <h3 class="media-card-title">Autocoureur Nick Ho pakt knap podium in Porsche Carrera Cup Benelux thriller</h3>
+              <p class="media-card-meta">04 MEI 2024 &bull; 5 MIN READ</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-article-card">
+          <a href="#contact" class="media-card-link">
+            <div class="media-card-thumb">
+              <img src="{% static 'images/hero_redbull_stage_bg.jpg' %}" alt="Nick Ho over zijn carrière en sponsoring" loading="lazy">
+              <div class="media-card-badge">INTERVIEW</div>
+            </div>
+            <div class="media-card-content">
+              <h3 class="media-card-title">Nick Ho over zijn carrière, sponsoring en de stap naar Porsche Mobil 1 Supercup</h3>
+              <p class="media-card-meta">19 APRIL 2024 &bull; 6 MIN READ</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="media-article-card">
+          <a href="#contact" class="media-card-link">
+            <div class="media-card-thumb">
+              <img src="{% static 'images/redbull_f1_car_hero.jpg' %}" alt="Telemetry analysis and preparation" loading="lazy">
+              <div class="media-card-badge">TECHNICAL</div>
+            </div>
+            <div class="media-card-content">
+              <h3 class="media-card-title">Data Engineering & Telemetry: Inside Nick Ho's Setup for Circuit Zandvoort</h3>
+              <p class="media-card-meta">15 MAART 2024 &bull; 4 MIN READ</p>
+            </div>
+          </a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

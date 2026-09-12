@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ABOUT MAX VERSTAPPEN — THE DRIVER & THE CRAFT{% endblock %}
+
+{% block content %}
+<div style="padding-top: var(--nav-height);">
+  {% include 'components/statement.html' %}
+  {% include 'components/about.html' %}
+  {% include 'components/stats.html' %}
+</div>
+{% endblock %}

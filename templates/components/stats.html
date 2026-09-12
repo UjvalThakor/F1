@@ -1,0 +1,52 @@
+{% load static %}
+<section class="section" id="stats" style="padding-top: 0; padding-bottom: 0;">
+  <div class="container-full">
+    <div class="stats-grid">
+      {% for stat in stats %}
+      <div class="stat-box">
+        <div class="stat-meta-top">
+          <span class="telemetry-label">METRIC // 0{{ forloop.counter }}</span>
+          <span style="width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%;"></span>
+        </div>
+
+        <div class="stat-num-wrapper">
+          <div class="number-huge">
+            {% if stat.prefix %}{{ stat.prefix }}{% endif %}<span class="stat-number-val" data-target="{{ stat.value }}">{{ stat.value }}</span>{% if stat.suffix %}<span class="suffix">{{ stat.suffix }}</span>{% endif %}
+          </div>
+        </div>
+
+        <div>
+          <div class="stat-title">{{ stat.title }}</div>
+          {% if stat.description %}
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
+            {{ stat.description }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <!-- Fallback display if DB is not yet seeded -->
+      <div class="stat-box">
+        <div class="stat-meta-top"><span class="telemetry-label">METRIC // 01</span></div>
+        <div class="stat-num-wrapper"><div class="number-huge"><span class="stat-number-val" data-target="4">4</span></div></div>
+        <div class="stat-title">WORLD CHAMPIONSHIPS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-meta-top"><span class="telemetry-label">METRIC // 02</span></div>
+        <div class="stat-num-wrapper"><div class="number-huge"><span class="stat-number-val" data-target="63">63</span><span class="suffix">+</span></div></div>
+        <div class="stat-title">GRAND PRIX WINS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-meta-top"><span class="telemetry-label">METRIC // 03</span></div>
+        <div class="stat-num-wrapper"><div class="number-huge"><span class="stat-number-val" data-target="111">111</span><span class="suffix">+</span></div></div>
+        <div class="stat-title">CAREER PODIUMS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-meta-top"><span class="telemetry-label">METRIC // 04</span></div>
+        <div class="stat-num-wrapper"><div class="number-huge"><span class="stat-number-val" data-target="40">40</span><span class="suffix">+</span></div></div>
+        <div class="stat-title">POLE POSITIONS</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
