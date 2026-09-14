@@ -233,191 +233,175 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 5. RACE CALENDAR & MOVEABLE CAR (100% Exact Nick Ho Motorsports Recreation)
-  // https://nickho-motorsports.nl/
+  // 5. CAR SCROLL EXPERIENCE (FROM RACE CALENDAR TO START OF VIDEO SECTION)
+  // Car is active & moves with scroll through Races, Sponsor CTA, and News.
+  // The moment the Video section (#film) starts, car movement stops and car disappears.
   // --------------------------------------------------------------------------
-  const agendaSection = document.querySelector('.section_agenda');
-  const agendaCar = document.querySelector('[data-agenda="car"]');
-  const agendaStart = document.querySelector('[data-agenda="start"]');
-  const agendaEnd = document.querySelector('[data-agenda="end"]');
-  const agendaSticky = document.querySelector('.agenda_sticky');
+  const carZone = document.getElementById('carScrollZone') || document.querySelector('.car-scroll-zone');
+  const filmSection = document.getElementById('film') || document.querySelector('.section-video-showcase');
+  const agendaStickyWrapper = document.getElementById('agendaStickyWrapper') || document.querySelector('.agenda_sticky_wrapper');
+  const agendaCar = document.getElementById('agendaCarImage') || document.querySelector('[data-agenda="car"]');
+  const agendaSticky = document.getElementById('agendaSticky') || document.querySelector('.agenda_sticky');
   const agendaItems = gsap.utils.toArray('[data-agenda="item"]');
 
-  if (agendaSection && agendaCar && agendaStart && agendaEnd && agendaItems.length > 0) {
+  if (carZone && agendaCar && agendaStickyWrapper) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion && typeof gsap !== 'undefined') {
-      const config = {
-        carInDuration: 0.8,
-        carInEase: 'expo.out',
-        carOutDuration: 0.8,
-        carOutEase: 'expo.in',
-        carStart: 'top center',
-        carEnd: 'bottom center',
-        highlightColor: '#fed60a',
-        yellowDuration: 0.2,
-        yellowEase: 'power2.out',
-        resetDuration: 0.6,
-        resetEase: 'power2.inOut',
-        itemStart: 'top center',
-        itemEnd: 'bottom center',
-        debug: false
-      };
-
-      const vh = (pct) => window.innerHeight * (pct / 100);
-      let carTween = null;
-      let carState = 'above';
-
-      function tweenCar(targetY, duration, ease, onComplete) {
-        if (carTween) carTween.kill();
-        carTween = gsap.to(agendaCar, {
-          y: targetY,
-          duration: duration,
-          ease: ease,
-          force3D: true,
-          overwrite: true,
-          onComplete: onComplete || null
-        });
-        return carTween;
-      }
-
-      function checkCarPosition() {
-        if (carTween && carTween.isActive()) return;
-        const mid = window.innerHeight / 2;
-        const topStart = agendaStart.getBoundingClientRect().top;
-        const topEnd = agendaEnd.getBoundingClientRect().top;
-
-        let currentState;
-        if (topStart > mid) {
-          currentState = 'above';
-        } else if (topEnd > mid) {
-          currentState = 'in';
+    // Helper to toggle active state of car
+    function setCarActive(active) {
+      if (active) {
+        agendaStickyWrapper.classList.add('is-active');
+        if (typeof gsap !== 'undefined') {
+          gsap.to(agendaCar, { autoAlpha: 1, duration: 0.2, overwrite: 'auto' });
         } else {
-          currentState = 'below';
+          agendaCar.style.opacity = '1';
+          agendaCar.style.visibility = 'visible';
         }
+      } else {
+        agendaStickyWrapper.classList.remove('is-active');
+        if (typeof gsap !== 'undefined') {
+          gsap.to(agendaCar, { autoAlpha: 0, duration: 0.15, overwrite: 'auto' });
+        } else {
+          agendaCar.style.opacity = '0';
+          agendaCar.style.visibility = 'hidden';
+        }
+      }
+    }
 
-        if (currentState !== carState) {
-          carState = currentState;
-          if (currentState === 'above') {
-            gsap.set(agendaCar, { y: -vh(100), rotation: 0, autoAlpha: 0 });
-          } else if (currentState === 'below') {
-            gsap.set(agendaCar, { y: vh(100), rotation: 0, autoAlpha: 0 });
+    // Boundary enforcement:
+    // 1. Car starts when entering carZone (Race Calendar, top <= window.innerHeight * 0.45)
+    // 2. Car MUST STOP the moment the Video section (#film) starts (filmRect.top <= window.innerHeight * 0.98)
+    // 3. Car must NEVER be visible in Video, Gallery, Contact, or Footer
+    // 4. Car must NEVER be visible before Race Calendar (Hero, Statement, Helmet, Timeline)
+    function enforceCarBoundaries() {
+      const zoneRect = carZone.getBoundingClientRect();
+      const filmRect = filmSection ? filmSection.getBoundingClientRect() : null;
+      const vh = window.innerHeight;
+
+      // Has the video section started entering the screen?
+      const filmStarted = filmRect ? (filmRect.top <= vh * 0.98) : (zoneRect.bottom <= vh * 0.5);
+
+      // Has the user scrolled past the entire car zone?
+      const zoneExited = zoneRect.bottom <= 0;
+
+      // Is the user above the car zone?
+      const aboveZone = zoneRect.top > vh * 0.45;
+
+      if (filmStarted || zoneExited || aboveZone) {
+        setCarActive(false);
+      } else {
+        setCarActive(true);
+      }
+    }
+
+    window.addEventListener('scroll', enforceCarBoundaries, { passive: true });
+    window.addEventListener('resize', enforceCarBoundaries, { passive: true });
+
+    // Video Section direct observer: the instant video section starts, stop car movement!
+    if (filmSection && 'IntersectionObserver' in window) {
+      const filmObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setCarActive(false);
           } else {
-            gsap.set(agendaCar, { y: 0, rotation: 0, autoAlpha: 1 });
+            enforceCarBoundaries();
+          }
+        });
+      }, { threshold: [0, 0.05, 0.1] });
+      filmObserver.observe(filmSection);
+
+      // Also observe downstream sections to ensure car stays 100% stopped & hidden
+      const postVideoSections = document.querySelectorAll('#gallery, #contact, footer');
+      postVideoSections.forEach(sec => filmObserver.observe(sec));
+    }
+
+    if (!prefersReducedMotion && typeof gsap !== 'undefined') {
+      // ScrollTrigger for car zone:
+      // Controls the car movement from entry of carZone until start of Video section
+      ScrollTrigger.create({
+        trigger: carZone,
+        start: 'top 45%',
+        end: () => filmSection ? 'bottom bottom' : 'bottom bottom',
+        onEnter: () => enforceCarBoundaries(),
+        onLeave: () => setCarActive(false),
+        onEnterBack: () => enforceCarBoundaries(),
+        onLeaveBack: () => setCarActive(false),
+        onUpdate: (self) => {
+          enforceCarBoundaries();
+          const p = self.progress;
+          // Steering micro-rotation along the track as user scrolls
+          if (p > 0.01 && p < 0.98) {
+            const steerAngle = Math.sin(p * Math.PI * 6) * 1.8;
+            gsap.set(agendaCar, { rotation: steerAngle });
           }
         }
-      }
-
-      // Initial placement: car hidden off-screen above
-      gsap.set(agendaCar, {
-        y: -vh(100),
-        rotation: 0,
-        autoAlpha: 0,
-        force3D: true,
-        willChange: 'transform'
       });
 
-      // Actions on scroll trigger boundary crossings
-      const enterCar = () => {
-        carState = 'in';
-        gsap.set(agendaCar, { autoAlpha: 1 });
-        tweenCar(0, config.carInDuration, config.carInEase);
-      };
-
-      const exitCarBelow = () => {
-        carState = 'below';
-        tweenCar(vh(100), config.carOutDuration, config.carOutEase, () => {
-          gsap.set(agendaCar, { autoAlpha: 0 });
-        });
-      };
-
-      const exitCarAbove = () => {
-        carState = 'above';
-        tweenCar(-vh(100), config.carOutDuration, config.carOutEase, () => {
-          gsap.set(agendaCar, { autoAlpha: 0 });
-        });
-      };
-
-      // Entrance trigger: car enters from above when section reaches center
-      ScrollTrigger.create({
-        trigger: agendaStart,
-        start: config.carStart,
-        onEnter: enterCar,
-        onLeaveBack: exitCarAbove,
-        markers: config.debug
-      });
-
-      // Exit trigger: car exits below when calendar end reaches center
-      ScrollTrigger.create({
-        trigger: agendaEnd,
-        start: config.carEnd,
-        onEnter: exitCarBelow,
-        onLeaveBack: enterCar,
-        markers: config.debug
-      });
-
-      // Subtle parallax on the sticky car layer while scrolling calendar
-      if (agendaSticky) {
-        gsap.fromTo(agendaSticky,
-          { yPercent: -10 },
-          {
-            yPercent: 10,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: agendaSection,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true
-            }
-          }
-        );
-      }
-
-      // Race items yellow highlighting as each item glides past screen center
-      agendaItems.forEach((item) => {
-        const line = item.querySelector('[data-agenda="line"]');
-        const origColor = gsap.getProperty(item, 'color') || '#ffffff';
-        const origBg = line ? (gsap.getProperty(line, 'backgroundColor') || 'rgba(255,255,255,0.15)') : null;
-
-        const onEnter = () => {
-          gsap.to(item, { color: config.highlightColor, duration: config.yellowDuration, ease: config.yellowEase, overwrite: 'auto' });
-          if (line) gsap.to(line, { backgroundColor: config.highlightColor, duration: config.yellowDuration, ease: config.yellowEase, overwrite: 'auto' });
-          item.classList.add('is-active');
-        };
-
-        const onLeave = () => {
-          gsap.to(item, { color: origColor, duration: config.resetDuration, ease: config.resetEase, overwrite: 'auto' });
-          if (line) gsap.to(line, { backgroundColor: origBg, duration: config.resetDuration, ease: config.resetEase, overwrite: 'auto' });
-          item.classList.remove('is-active');
-        };
-
+      // Video section entrance trigger: guarantee car stops moving the second video starts
+      if (filmSection) {
         ScrollTrigger.create({
-          trigger: item,
-          start: config.itemStart,
-          end: config.itemEnd,
-          onEnter: onEnter,
-          onLeave: onLeave,
-          onEnterBack: onEnter,
-          onLeaveBack: onLeave,
-          markers: config.debug
+          trigger: filmSection,
+          start: 'top bottom', // The moment the top of the video section hits the bottom of the viewport
+          end: 'bottom top',
+          onEnter: () => setCarActive(false),
+          onEnterBack: () => setCarActive(false),
+          onLeaveBack: () => enforceCarBoundaries()
         });
+      }
 
-        // Hover support
-        item.addEventListener('mouseenter', () => {
-          item.classList.add('is-active');
-        });
-        item.addEventListener('mouseleave', () => {
-          const rect = item.getBoundingClientRect();
-          const mid = window.innerHeight / 2;
-          if (rect.top > mid || rect.bottom < mid) {
+      // Sequential yellow highlighting of race items in #races
+      if (agendaItems.length > 0) {
+        const highlightColor = '#fed60a';
+        const yellowDuration = 0.22;
+        const resetDuration = 0.55;
+
+        agendaItems.forEach((item) => {
+          const line = item.querySelector('[data-agenda="line"]');
+          const origColor = gsap.getProperty(item, 'color') || '#ffffff';
+          const origBg = line ? (gsap.getProperty(line, 'backgroundColor') || 'rgba(255,255,255,0.15)') : null;
+
+          const onEnter = () => {
+            gsap.to(item, { color: highlightColor, duration: yellowDuration, ease: 'power2.out', overwrite: 'auto' });
+            if (line) gsap.to(line, { backgroundColor: highlightColor, duration: yellowDuration, ease: 'power2.out', overwrite: 'auto' });
+            item.classList.add('is-active');
+          };
+
+          const onLeave = () => {
+            gsap.to(item, { color: origColor, duration: resetDuration, ease: 'power2.inOut', overwrite: 'auto' });
+            if (line) gsap.to(line, { backgroundColor: origBg, duration: resetDuration, ease: 'power2.inOut', overwrite: 'auto' });
             item.classList.remove('is-active');
-          }
-        });
-      });
+          };
 
-      ScrollTrigger.addEventListener('refresh', checkCarPosition);
-      checkCarPosition();
-      window.addEventListener('load', () => ScrollTrigger.refresh());
+          ScrollTrigger.create({
+            trigger: item,
+            start: 'top 52%',
+            end: 'bottom 48%',
+            onEnter: onEnter,
+            onLeave: onLeave,
+            onEnterBack: onEnter,
+            onLeaveBack: onLeave
+          });
+
+          // Hover support
+          item.addEventListener('mouseenter', () => {
+            item.classList.add('is-active');
+          });
+          item.addEventListener('mouseleave', () => {
+            const rect = item.getBoundingClientRect();
+            const mid = window.innerHeight / 2;
+            if (rect.top > mid || rect.bottom < mid) {
+              item.classList.remove('is-active');
+            }
+          });
+        });
+      }
+
+      ScrollTrigger.addEventListener('refresh', enforceCarBoundaries);
+      enforceCarBoundaries();
+      window.addEventListener('load', () => {
+        ScrollTrigger.refresh();
+        enforceCarBoundaries();
+      });
     }
   }
 
@@ -511,36 +495,328 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // SPRINT 2: VIDEO SHOWCASE SOUND TOGGLE
+  // SPRINT 2: VIDEO SHOWCASE CONTROLS & RACE REEL SWITCHER
+  // Features real Max Verstappen race win (Abu Dhabi 2021) & controversial races (Saudi Arabia, Silverstone)
+  // Full audio management with volume slider, live telemetry HUD, and seamless unmuting
   // --------------------------------------------------------------------------
   const videoEl = document.getElementById('showcaseVideoEl');
+  const mediaWrap = document.querySelector('.video-showcase-media');
+  const centerControls = document.getElementById('videoCenterControls');
   const soundToggleBtn = document.getElementById('videoSoundToggleBtn');
-  if (videoEl && soundToggleBtn) {
-    const iconMuted = soundToggleBtn.querySelector('.sound-icon-muted');
-    const iconActive = soundToggleBtn.querySelector('.sound-icon-active');
-    const label = soundToggleBtn.querySelector('.sound-toggle-label');
+  const audioHud = document.getElementById('videoAudioHud');
+  const videoTabs = document.querySelectorAll('.video-reel-tab');
+  const posterImg = document.getElementById('showcasePosterImg');
+  const telemetryText = document.getElementById('videoTelemetryText');
+  const captionBadge = document.getElementById('videoCaptionBadge');
+  const captionHeadline = document.getElementById('videoCaptionHeadline');
+  const captionDesc = document.getElementById('videoCaptionDesc');
+  const playPauseBtn = document.getElementById('videoPlayPauseBtn');
+  const fullscreenBtn = document.getElementById('videoFullscreenBtn');
+  const volBtn = document.getElementById('videoVolumeBtn');
+  const volSlider = document.getElementById('videoVolumeSlider');
+  const volLevel = document.getElementById('videoVolumeLevel');
 
-    soundToggleBtn.addEventListener('click', () => {
-      if (videoEl.muted) {
+  if (videoEl) {
+    let isAudioEnabled = false;
+    let currentVolume = 1.0;
+
+    // Master Audio UI & State Sync function
+    const updateAudioUI = (enabled, vol) => {
+      if (vol !== undefined) {
+        currentVolume = Math.max(0, Math.min(1, vol));
+      }
+      isAudioEnabled = enabled;
+
+      // Apply to video DOM element
+      if (isAudioEnabled && currentVolume > 0) {
         videoEl.muted = false;
-        videoEl.volume = 0.85;
-        videoEl.play().catch(e => console.warn('Video play error:', e));
-        if (iconMuted) iconMuted.style.display = 'none';
-        if (iconActive) iconActive.style.display = 'block';
-        if (label) label.textContent = 'SOUND OFF';
-        soundToggleBtn.classList.add('is-active');
+        videoEl.volume = currentVolume;
+        videoEl.removeAttribute('muted');
       } else {
         videoEl.muted = true;
-        if (iconMuted) iconMuted.style.display = 'block';
-        if (iconActive) iconActive.style.display = 'none';
-        if (label) label.textContent = 'SOUND ON';
-        soundToggleBtn.classList.remove('is-active');
+      }
+
+      const percent = Math.round(currentVolume * 100);
+
+      // 1. Center Unmute Banner
+      if (centerControls) {
+        if (isAudioEnabled && currentVolume > 0) {
+          centerControls.classList.add('is-audio-on');
+        } else {
+          centerControls.classList.remove('is-audio-on');
+        }
+      }
+
+      if (soundToggleBtn) {
+        const soundMutedIcon = soundToggleBtn.querySelector('.sound-icon-muted');
+        const soundActiveIcon = soundToggleBtn.querySelector('.sound-icon-active');
+        const headline = soundToggleBtn.querySelector('.sound-toggle-headline');
+        const badge = soundToggleBtn.querySelector('.sound-toggle-badge');
+        if (soundMutedIcon) soundMutedIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'none' : 'block';
+        if (soundActiveIcon) soundActiveIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'block' : 'none';
+        if (headline) headline.textContent = (isAudioEnabled && currentVolume > 0) ? 'AUDIO LIVE' : 'UNMUTE BROADCAST AUDIO';
+        if (badge) badge.textContent = (isAudioEnabled && currentVolume > 0) ? '🔊 ON' : '🔊 SOUND ON';
+      }
+
+      // 2. Top-Right Audio Telemetry HUD
+      if (audioHud) {
+        const audioHudText = document.getElementById('audioHudText');
+        const audioHudWaves = document.getElementById('audioHudWaves');
+        if (isAudioEnabled && currentVolume > 0) {
+          audioHud.classList.add('is-audio-live');
+          if (audioHudText) audioHudText.textContent = `AUDIO: LIVE // ${percent}%`;
+          if (audioHudWaves) audioHudWaves.style.display = 'inline-flex';
+        } else {
+          audioHud.classList.remove('is-audio-live');
+          if (audioHudText) audioHudText.textContent = 'AUDIO: MUTED (CLICK TO UNMUTE)';
+          if (audioHudWaves) audioHudWaves.style.display = 'none';
+        }
+      }
+
+      // 3. Action Bar Volume Controls
+      if (volBtn) {
+        const volMutedIcon = volBtn.querySelector('.vol-icon-muted');
+        const volActiveIcon = volBtn.querySelector('.vol-icon-active');
+        if (volMutedIcon) volMutedIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'none' : 'block';
+        if (volActiveIcon) volActiveIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'block' : 'none';
+      }
+      if (volSlider) {
+        volSlider.value = (isAudioEnabled && currentVolume > 0) ? currentVolume : 0;
+      }
+      if (volLevel) {
+        volLevel.textContent = (isAudioEnabled && currentVolume > 0) ? `${percent}%` : '0%';
+      }
+    };
+
+    // Helper to turn on audio and play
+    const enableAndPlayAudio = (targetVolume = 1.0) => {
+      updateAudioUI(true, targetVolume);
+      const promise = videoEl.play();
+      if (promise !== undefined) {
+        promise.catch(err => {
+          console.warn('Audio play request handled:', err);
+        });
+      }
+    };
+
+    // 1. Race Moment Switcher Tabs
+    if (videoTabs.length > 0) {
+      videoTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          if (tab.classList.contains('is-active')) return;
+
+          // Update tabs state
+          videoTabs.forEach(t => {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
+
+          // Extract data attributes
+          const videoSrc = tab.getAttribute('data-video-src');
+          const posterSrc = tab.getAttribute('data-poster');
+          const telemetry = tab.getAttribute('data-telemetry');
+          const headline = tab.getAttribute('data-headline');
+          const caption = tab.getAttribute('data-caption');
+          const badge = tab.getAttribute('data-badge');
+
+          // Automatically enable audio on tab click (user interaction gesture)
+          isAudioEnabled = true;
+
+          // Smooth fade transition
+          if (typeof gsap !== 'undefined') {
+            gsap.to(videoEl, {
+              opacity: 0.3,
+              duration: 0.2,
+              onComplete: () => {
+                videoEl.src = videoSrc;
+                if (posterSrc) {
+                  videoEl.poster = posterSrc;
+                  if (posterImg) posterImg.src = posterSrc;
+                }
+                videoEl.load();
+
+                // Re-enforce audio state after video element load
+                videoEl.muted = false;
+                videoEl.volume = currentVolume;
+                videoEl.removeAttribute('muted');
+                updateAudioUI(true, currentVolume);
+
+                const playPromise = videoEl.play();
+                if (playPromise !== undefined) {
+                  playPromise.catch(() => {});
+                }
+                gsap.to(videoEl, { opacity: 1, duration: 0.35 });
+              }
+            });
+          } else {
+            videoEl.src = videoSrc;
+            if (posterSrc) {
+              videoEl.poster = posterSrc;
+              if (posterImg) posterImg.src = posterSrc;
+            }
+            videoEl.load();
+            videoEl.muted = false;
+            videoEl.volume = currentVolume;
+            videoEl.removeAttribute('muted');
+            updateAudioUI(true, currentVolume);
+            videoEl.play().catch(() => {});
+          }
+
+          // Update overlays
+          if (telemetryText && telemetry) telemetryText.textContent = telemetry;
+          if (captionBadge && badge) captionBadge.textContent = badge;
+          if (captionHeadline && headline) captionHeadline.textContent = headline;
+          if (captionDesc && caption) captionDesc.textContent = caption;
+
+          // Update play button icon
+          if (playPauseBtn) {
+            const pauseIcon = playPauseBtn.querySelector('.action-icon-pause');
+            const playIcon = playPauseBtn.querySelector('.action-icon-play');
+            if (pauseIcon) pauseIcon.style.display = 'block';
+            if (playIcon) playIcon.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // 2. Play/Pause Action Button
+    if (playPauseBtn) {
+      const pauseIcon = playPauseBtn.querySelector('.action-icon-pause');
+      const playIcon = playPauseBtn.querySelector('.action-icon-play');
+
+      playPauseBtn.addEventListener('click', () => {
+        if (videoEl.paused) {
+          videoEl.play().catch(() => {});
+          if (pauseIcon) pauseIcon.style.display = 'block';
+          if (playIcon) playIcon.style.display = 'none';
+          if (mediaWrap) mediaWrap.classList.remove('is-paused');
+        } else {
+          videoEl.pause();
+          if (pauseIcon) pauseIcon.style.display = 'none';
+          if (playIcon) playIcon.style.display = 'block';
+          if (mediaWrap) mediaWrap.classList.add('is-paused');
+        }
+      });
+    }
+
+    // Video element native play/pause event hooks
+    videoEl.addEventListener('play', () => {
+      if (mediaWrap) mediaWrap.classList.remove('is-paused');
+      if (playPauseBtn) {
+        const pauseIcon = playPauseBtn.querySelector('.action-icon-pause');
+        const playIcon = playPauseBtn.querySelector('.action-icon-play');
+        if (pauseIcon) pauseIcon.style.display = 'block';
+        if (playIcon) playIcon.style.display = 'none';
       }
     });
 
-    // Ensure muted autoplay kicks in
+    videoEl.addEventListener('pause', () => {
+      if (mediaWrap) mediaWrap.classList.add('is-paused');
+      if (playPauseBtn) {
+        const pauseIcon = playPauseBtn.querySelector('.action-icon-pause');
+        const playIcon = playPauseBtn.querySelector('.action-icon-play');
+        if (pauseIcon) pauseIcon.style.display = 'none';
+        if (playIcon) playIcon.style.display = 'block';
+      }
+    });
+
+    // 3. Fullscreen Action Button
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', () => {
+        const wrapper = document.querySelector('.video-showcase-wrapper') || videoEl;
+        if (!document.fullscreenElement) {
+          if (wrapper.requestFullscreen) {
+            wrapper.requestFullscreen().catch(() => {});
+          } else if (videoEl.webkitEnterFullscreen) {
+            videoEl.webkitEnterFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        }
+      });
+    }
+
+    // 4. Center Sound Toggle Button
+    if (soundToggleBtn) {
+      soundToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (videoEl.muted || !isAudioEnabled) {
+          enableAndPlayAudio(1.0);
+        } else {
+          updateAudioUI(false);
+        }
+      });
+    }
+
+    // 5. Top-Right Audio HUD click to toggle
+    if (audioHud) {
+      audioHud.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (videoEl.muted || !isAudioEnabled) {
+          enableAndPlayAudio(1.0);
+        } else {
+          updateAudioUI(false);
+        }
+      });
+    }
+
+    // 6. Action Bar Volume Button click to toggle
+    if (volBtn) {
+      volBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (videoEl.muted || !isAudioEnabled) {
+          enableAndPlayAudio(currentVolume > 0 ? currentVolume : 1.0);
+        } else {
+          updateAudioUI(false);
+        }
+      });
+    }
+
+    // 7. Volume Slider
+    if (volSlider) {
+      volSlider.addEventListener('input', (e) => {
+        e.stopPropagation();
+        const val = parseFloat(volSlider.value);
+        if (val === 0) {
+          updateAudioUI(false, 0);
+        } else {
+          updateAudioUI(true, val);
+          if (videoEl.paused) {
+            videoEl.play().catch(() => {});
+          }
+        }
+      });
+    }
+
+    // 8. Direct click on video media player to unmute or toggle play/pause
+    if (mediaWrap) {
+      mediaWrap.addEventListener('click', (e) => {
+        // Prevent click when tapping controls, buttons, or slider
+        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.video-reel-tab')) {
+          return;
+        }
+
+        // If audio is currently muted, clicking the player un-mutes it
+        if (videoEl.muted || !isAudioEnabled) {
+          enableAndPlayAudio(1.0);
+        } else {
+          // If already unmuted, clicking video toggles play/pause
+          if (videoEl.paused) {
+            videoEl.play().catch(() => {});
+          } else {
+            videoEl.pause();
+          }
+        }
+      });
+    }
+
+    // Initial check: ensure muted autoplay begins smoothly
     if (videoEl.paused) {
-      videoEl.play().catch(() => { });
+      videoEl.play().catch(() => {});
     }
   }
 

@@ -26,7 +26,8 @@
     align-items: center;
     padding: 0 clamp(3.5rem, 7.5vw, 9rem);
     box-sizing: border-box;
-    margin-bottom: -100vh; /* Lets center images scroll continuously behind */
+    margin-bottom: -100vh;
+    /* Lets center images scroll continuously behind */
   }
 
   /* Left Column: Titles (Shifted to left side with subtle slide) */
@@ -213,11 +214,13 @@
     .about_sticky_viewport {
       display: none;
     }
+
     .about_images_track {
       padding: 3rem 1.5rem;
       gap: 4rem;
       max-width: 540px;
     }
+
     .about_image_wrapper {
       opacity: 1;
       filter: saturate(1);
@@ -227,10 +230,10 @@
 </style>
 
 <section class="section_about" id="career">
-  
+
   <!-- PINNED 100VH VIEWPORT OVERLAY (Titles, Descriptions, Skip & Counter) -->
   <div class="about_sticky_viewport">
-    
+
     <!-- LEFT COLUMN: Titles -->
     <div class="about_col_left">
       <div class="about_heading_item is-active" data-about-title-item="0">
@@ -253,19 +256,29 @@
     <!-- RIGHT COLUMN: Paragraphs -->
     <div class="about_col_right">
       <div class="about_sticky_item is-active" data-about-content-item="0">
-        <p>Born into a racing dynasty, Max began karting at just four years old under the mentorship of his father, ex-F1 driver Jos Verstappen. By 2013, he achieved a historic double, winning both the European and World KZ Championships at age 15—one of the most dominant karting records in motorsport history.</p>
+        <p>Born into a racing dynasty, Max began karting at just four years old under the mentorship of his father,
+          ex-F1 driver Jos Verstappen. By 2013, he achieved a historic double, winning both the European and World KZ
+          Championships at age 15—one of the most dominant karting records in motorsport history.</p>
       </div>
       <div class="about_sticky_item" data-about-content-item="1">
-        <p>In 2015, Max debuted with Scuderia Toro Rosso at just 17 years and 166 days as the youngest driver in F1 history. Promoted to Red Bull Racing ahead of the 2016 Spanish Grand Prix, he delivered an astonishing drive to claim victory on his team debut, becoming the youngest Grand Prix winner at 18 years and 228 days.</p>
+        <p>In 2015, Max debuted with Scuderia Toro Rosso at just 17 years and 166 days as the youngest driver in F1
+          history. Promoted to Red Bull Racing ahead of the 2016 Spanish Grand Prix, he delivered an astonishing drive
+          to claim victory on his team debut, becoming the youngest Grand Prix winner at 18 years and 228 days.</p>
       </div>
       <div class="about_sticky_item" data-about-content-item="2">
-        <p>In 2021, Verstappen engaged in one of the most intense title battles in Formula 1 history. Driving the Red Bull RB16B, he claimed 10 wins, 18 podiums, and 10 pole positions. With a thrilling last-lap overtake at Abu Dhabi, he clinched his maiden FIA Formula 1 World Championship, becoming the first Dutch champion.</p>
+        <p>In 2021, Verstappen engaged in one of the most intense title battles in Formula 1 history. Driving the Red
+          Bull RB16B, he claimed 10 wins, 18 podiums, and 10 pole positions. With a thrilling last-lap overtake at Abu
+          Dhabi, he clinched his maiden FIA Formula 1 World Championship, becoming the first Dutch champion.</p>
       </div>
       <div class="about_sticky_item" data-about-content-item="3">
-        <p>In Formula 1’s ground-effect era, Verstappen achieved unparalleled dominance. In 2023, he shattered records with 19 wins in 22 races and 10 consecutive victories. In 2024, he clinched his fourth consecutive World Drivers' Championship, joining Fangio, Prost, Schumacher, Vettel, and Hamilton among racing legends.</p>
+        <p>In Formula 1’s ground-effect era, Verstappen achieved unparalleled dominance. In 2023, he shattered records
+          with 19 wins in 22 races and 10 consecutive victories. In 2024, he clinched his fourth consecutive World
+          Drivers' Championship, joining Fangio, Prost, Schumacher, Vettel, and Hamilton among racing legends.</p>
       </div>
       <div class="about_sticky_item" data-about-content-item="4">
-        <p>With over 60 Grand Prix victories, four consecutive World Drivers' Championships, and surgical precision in all conditions, Max Verstappen continues to define the pinnacle of Formula 1. Relentless, uncompromising, and faster than ever, his legacy is already etched in motorsport history.</p>
+        <p>With over 60 Grand Prix victories, four consecutive World Drivers' Championships, and surgical precision in
+          all conditions, Max Verstappen continues to define the pinnacle of Formula 1. Relentless, uncompromising, and
+          faster than ever, his legacy is already etched in motorsport history.</p>
       </div>
     </div>
 
@@ -331,6 +344,20 @@
     let currentIndex = -1;
 
     function updateActive() {
+      const secRect = section.getBoundingClientRect();
+      const stickyViewport = section.querySelector('.about_sticky_viewport');
+      if (stickyViewport) {
+        if (secRect.top > window.innerHeight * 0.8 || secRect.bottom <= window.innerHeight * 0.15) {
+          stickyViewport.style.opacity = '0';
+          stickyViewport.style.visibility = 'hidden';
+          stickyViewport.style.pointerEvents = 'none';
+        } else {
+          stickyViewport.style.opacity = '1';
+          stickyViewport.style.visibility = 'visible';
+          stickyViewport.style.pointerEvents = '';
+        }
+      }
+
       const triggerY = window.innerHeight * 0.5;
       let newIndex = 0;
 

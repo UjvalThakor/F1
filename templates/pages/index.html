@@ -10,22 +10,34 @@
 <!-- 2. DRIVER STATEMENT & DRIVEN BY PROGRESS -->
 {% include 'components/statement.html' %}
 
-<!-- 3. PARTNERS & HELMET SHOWCASE -->
+<!-- 3. OFFICIAL PARTNERS -->
 {% include 'components/partners.html' %}
 
 <!-- 4. CAREER STORY HORIZONTAL PINNED SLIDER -->
 {% include 'components/timeline.html' %}
 
-<!-- 5. RACE CALENDAR PINNED CAR PARALLAX -->
-{% include 'components/calendar.html' %}
+<!-- CAR SCROLL EXPERIENCE ZONE (FROM RACE CALENDAR TO START OF VIDEO SECTION) -->
+<div class="car-scroll-zone" id="carScrollZone">
+  <!-- Central Moveable Car Stage (Active from Race Calendar until Video Section starts) -->
+  <div class="agenda_sticky_wrapper" id="agendaStickyWrapper">
+    <div class="agenda_sticky" id="agendaSticky" data-parallax="target">
+      <img src="{% static 'images/redbull_topdown_facing_down.png' %}?v=3"
+        alt="Max Verstappen Red Bull Racing Formula 1 Car" class="agenda_car_image" id="agendaCarImage"
+        data-agenda="car" loading="eager" />
+    </div>
+  </div>
 
-<!-- 6. MEDIA & ARTICLES HORIZONTAL SLIDER -->
-{% include 'components/news.html' %}
+  <!-- 5. RACE CALENDAR -->
+  {% include 'components/calendar.html' %}
 
-<!-- 7. SPONSORSHIP GUIDE CTA -->
-{% include 'components/sponsor_cta.html' %}
+  <!-- 6. WANT TO KNOW MORE ABOUT THE CHAMPIONSHIPS (SPONSOR GUIDE CTA) -->
+  {% include 'components/sponsor_cta.html' %}
 
-<!-- 8. FULL-WIDTH CINEMATIC VIDEO SHOWCASE -->
+  <!-- 7. MEDIA & ARTICLES HORIZONTAL SLIDER -->
+  {% include 'components/news.html' %}
+</div>
+
+<!-- 8. FULL-WIDTH CINEMATIC VIDEO SHOWCASE (CAR MOVEMENT STOPS HERE) -->
 {% include 'components/video.html' %}
 
 <!-- 9. CURVED ARC GALLERY WITH SPEEDOMETER DIAL -->

@@ -8,16 +8,16 @@
     <div class="photo-gallery-main" id="galleryMainFrame">
       <!-- Main Image -->
       <img
-        src="{% static 'images/mv_celebrate_zandvoort.jpg' %}"
-        alt="Max Verstappen Gallery"
+        src="{% static 'images/gallery_trophy_lift.jpg' %}"
+        alt="Max Verstappen World Champion Trophy Lift"
         class="photo-gallery-main-img"
         id="galleryMainImg"
       >
       <!-- Caption Overlay -->
       <div class="photo-gallery-caption" id="galleryCaption">
         <span class="gallery-caption-index" id="galleryCaptionIdx">01 / 06</span>
-        <span class="gallery-caption-title" id="galleryCaptionTitle">ZANDVOORT TRIUMPH</span>
-        <span class="gallery-caption-meta" id="galleryCaptionMeta">HOME GRAND PRIX</span>
+        <span class="gallery-caption-title" id="galleryCaptionTitle">WORLD CHAMPION TROPHY LIFT</span>
+        <span class="gallery-caption-meta" id="galleryCaptionMeta">DUTCH GRAND PRIX</span>
       </div>
       <!-- Prev / Next arrows -->
       <button class="photo-gallery-arrow arrow-prev" id="galleryPrev" aria-label="Previous photo">
@@ -37,22 +37,22 @@
   <div class="photo-gallery-thumbs" id="galleryThumbs">
     <div class="photo-gallery-thumbs-track" id="galleryThumbsTrack">
       <button class="gallery-thumb active" data-idx="0" aria-label="Gallery photo 1">
-        <img src="{% static 'images/mv_celebrate_zandvoort.jpg' %}" alt="Zandvoort Triumph" loading="lazy">
+        <img src="{% static 'images/gallery_trophy_lift.jpg' %}" alt="Trophy Lift" loading="lazy">
       </button>
       <button class="gallery-thumb" data-idx="1" aria-label="Gallery photo 2">
-        <img src="{% static 'images/mv_celebrate_austria2022.jpg' %}" alt="Austrian GP Victory" loading="lazy">
+        <img src="{% static 'images/gallery_champagne.jpg' %}" alt="Champagne Celebration" loading="lazy">
       </button>
       <button class="gallery-thumb" data-idx="2" aria-label="Gallery photo 3">
-        <img src="{% static 'images/mv_monaco_win_hd.jpg' %}" alt="Monaco Victory" loading="lazy">
+        <img src="{% static 'images/gallery_4x_champion.jpg' %}" alt="4x World Champion" loading="lazy">
       </button>
       <button class="gallery-thumb" data-idx="3" aria-label="Gallery photo 4">
-        <img src="{% static 'images/mv_story_champagne.jpg' %}" alt="Champagne Celebration" loading="lazy">
+        <img src="{% static 'images/gallery_dutch_flag.jpg' %}" alt="Championship Heritage" loading="lazy">
       </button>
       <button class="gallery-thumb" data-idx="4" aria-label="Gallery photo 5">
-        <img src="{% static 'images/mv_brazil_win.jpg' %}" alt="Brazil Win" loading="lazy">
+        <img src="{% static 'images/gallery_monaco_win.jpg' %}" alt="Monaco Victory" loading="lazy">
       </button>
       <button class="gallery-thumb" data-idx="5" aria-label="Gallery photo 6">
-        <img src="{% static 'images/mv_celebrate_car_jump.jpg' %}" alt="Car Celebration" loading="lazy">
+        <img src="{% static 'images/gallery_zandvoort.jpg' %}" alt="Zandvoort Triumph" loading="lazy">
       </button>
     </div>
   </div>
@@ -61,12 +61,12 @@
 <script>
 (function() {
   const SLIDES = [
-    { src: "{% static 'images/mv_celebrate_zandvoort.jpg' %}", title: "ZANDVOORT TRIUMPH", meta: "HOME GRAND PRIX" },
-    { src: "{% static 'images/mv_celebrate_austria2022.jpg' %}", title: "AUSTRIAN GP VICTORY", meta: "RED BULL RING 2022" },
-    { src: "{% static 'images/mv_monaco_win_hd.jpg' %}", title: "MONACO VICTORY", meta: "CIRCUIT DE MONACO" },
-    { src: "{% static 'images/mv_story_champagne.jpg' %}", title: "CHAMPAGNE CELEBRATION", meta: "PODIUM GLORY" },
-    { src: "{% static 'images/mv_brazil_win.jpg' %}", title: "BRAZIL GP WIN", meta: "INTERLAGOS 2023" },
-    { src: "{% static 'images/mv_celebrate_car_jump.jpg' %}", title: "PARC FERMÉ CELEBRATION", meta: "CHAMPIONSHIP MOMENT" }
+    { src: "{% static 'images/gallery_trophy_lift.jpg' %}", title: "WORLD CHAMPION TROPHY LIFT", meta: "DUTCH GRAND PRIX" },
+    { src: "{% static 'images/gallery_champagne.jpg' %}", title: "CHAMPAGNE CELEBRATION", meta: "PODIUM GLORY" },
+    { src: "{% static 'images/gallery_4x_champion.jpg' %}", title: "4x WORLD CHAMPION", meta: "LAS VEGAS TITLE DECIDER" },
+    { src: "{% static 'images/gallery_dutch_flag.jpg' %}", title: "CHAMPIONSHIP HERITAGE", meta: "RED BULL RACING" },
+    { src: "{% static 'images/gallery_monaco_win.jpg' %}", title: "MONACO GP VICTORY", meta: "CIRCUIT DE MONACO" },
+    { src: "{% static 'images/gallery_zandvoort.jpg' %}", title: "ZANDVOORT TRIUMPH", meta: "HOME GRAND PRIX" }
   ];
 
   let current = 0;
@@ -107,7 +107,7 @@
     btn.addEventListener('click', function() { goTo(parseInt(btn.getAttribute('data-idx'))); });
   });
 
-  // Auto-advance every 5 seconds
-  setInterval(function() { goTo(current + 1); }, 5000);
+  // Auto-advance every 6 seconds
+  setInterval(function() { goTo(current + 1); }, 6000);
 })();
 </script>
