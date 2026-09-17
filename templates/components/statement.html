@@ -1,5 +1,14 @@
 {% load static %}
 <section class="section section-driven-progress" id="statement">
+  <style>
+    /* Ensure highlighted words in statement quote are authentic Red Bull racing red (#e10600) */
+    .progress-big-text .text-red,
+    .progress-big-text .text-yellow {
+      color: #e10600 !important;
+      text-shadow: 0 0 35px rgba(225, 6, 0, 0.35) !important;
+    }
+  </style>
+
   <!-- Subtle decorative vertical grid lines (matching reference video/image) -->
   <div class="progress-vertical-grid" aria-hidden="true">
     <span></span>
@@ -23,13 +32,13 @@
     <div class="progress-statement-stage" id="progressStage">
       <div class="progress-big-text">
         <div class="progress-line"><span class="text-dark">I’M NOT HERE TO BE LIKED, I’M</span></div>
-        <div class="progress-line"><span class="text-dark">HERE TO </span><span class="text-yellow">WIN. TO PUSH EVERY</span></div>
-        <div class="progress-line"><span class="text-yellow">LIMIT</span><span class="text-dark"> BEYOND WHAT OTHERS</span></div>
+        <div class="progress-line"><span class="text-dark">HERE TO </span><span class="text-red">WIN. TO PUSH EVERY</span></div>
+        <div class="progress-line"><span class="text-red">LIMIT</span><span class="text-dark"> BEYOND WHAT OTHERS</span></div>
         <div class="progress-line"><span class="text-dark">THINK IS POSSIBLE. IN EVERY</span></div>
         <div class="progress-line"><span class="text-dark">CORNER, ON EVERY LAP, TO BE</span></div>
         <div class="progress-line"><span class="text-dark">SHARPER, HARDER, TO BECOME</span></div>
-        <div class="progress-line"><span class="text-yellow">FASTER, RELENTLESS, UNTOUCHABLE.</span></div>
-        <div class="progress-line"><span class="text-yellow">WORLD CHAMPION.</span></div>
+        <div class="progress-line"><span class="text-red">FASTER, RELENTLESS, UNTOUCHABLE.</span></div>
+        <div class="progress-line"><span class="text-red">WORLD CHAMPION.</span></div>
       </div>
     </div>
 

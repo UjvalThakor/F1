@@ -15,41 +15,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Fullscreen Navigation Menu Overlay (Nick Ho / F1 Style)
   const navToggle = document.getElementById('navToggle');
+  const navHamburgerBtn = document.getElementById('navHamburgerBtn');
   const fullscreenMenu = document.getElementById('fullscreenMenu');
   const menuCloseBtn = document.getElementById('menuCloseBtn');
   const fullscreenLinks = document.querySelectorAll('.fullscreen-nav-link');
 
-  function openFullscreenMenu() {
-    if (!fullscreenMenu) return;
-    fullscreenMenu.classList.add('active');
-    fullscreenMenu.setAttribute('aria-hidden', 'false');
+  function openFullscreenMenu(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const menuEl = fullscreenMenu || document.getElementById('fullscreenMenu');
+    if (!menuEl) return;
+    menuEl.classList.add('active');
+    menuEl.setAttribute('aria-hidden', 'false');
     navToggle?.setAttribute('aria-expanded', 'true');
+    navHamburgerBtn?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    window.lenis?.stop();
+    if (window.lenis) {
+      try { window.lenis.stop(); } catch(err) {}
+    }
   }
 
-  function closeFullscreenMenu() {
-    if (!fullscreenMenu) return;
-    fullscreenMenu.classList.remove('active');
-    fullscreenMenu.setAttribute('aria-hidden', 'true');
+  function closeFullscreenMenu(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const menuEl = fullscreenMenu || document.getElementById('fullscreenMenu');
+    if (!menuEl) return;
+    menuEl.classList.remove('active');
+    menuEl.setAttribute('aria-hidden', 'true');
     navToggle?.setAttribute('aria-expanded', 'false');
+    navHamburgerBtn?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    window.lenis?.start();
+    if (window.lenis) {
+      try { window.lenis.start(); } catch(err) {}
+    }
   }
 
-  if (navToggle) {
-    navToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      openFullscreenMenu();
-    });
-  }
+  window.openFullscreenMenu = openFullscreenMenu;
+  window.closeFullscreenMenu = closeFullscreenMenu;
 
-  if (menuCloseBtn) {
-    menuCloseBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      closeFullscreenMenu();
-    });
-  }
+  if (navToggle) navToggle.addEventListener('click', openFullscreenMenu);
+  if (navHamburgerBtn) navHamburgerBtn.addEventListener('click', openFullscreenMenu);
+  if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeFullscreenMenu);
 
   // Close on ESC key
   window.addEventListener('keydown', (e) => {

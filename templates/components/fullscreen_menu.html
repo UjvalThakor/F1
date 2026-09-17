@@ -1,7 +1,236 @@
 {% load static %}
 <!-- FULLSCREEN YELLOW NAVIGATION MENU OVERLAY (NICK HO / F1 STYLE) -->
 <div class="fullscreen-menu-overlay" id="fullscreenMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Main Navigation Menu">
-  <!-- Subtle decorative vertical grid lines -->
+  <style>
+    /* Critical inline styles: ensures instant fixed fullscreen layout without FOUC or cache issues */
+    .fullscreen-menu-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      background-color: #fed60a !important; /* Exact Nick Ho iconic yellow */
+      z-index: 999999 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      transform: translateY(-100%) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.3s ease, visibility 0.45s !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .fullscreen-menu-overlay.active {
+      transform: translateY(0) !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    /* Subtle decorative vertical grid lines */
+    .fullscreen-menu-overlay .menu-vertical-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      pointer-events: none;
+      opacity: 0.08;
+      z-index: 1;
+    }
+
+    .fullscreen-menu-overlay .menu-vertical-grid span {
+      width: 1px;
+      height: 100%;
+      background: #000000;
+    }
+
+    /* Header inside overlay */
+    .fullscreen-menu-overlay .menu-overlay-header {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: clamp(1rem, 2.5vh, 2rem) clamp(1.5rem, 4vw, 3rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .fullscreen-menu-overlay .menu-brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .fullscreen-menu-overlay .brand-car-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: #e10600;
+      color: #ffffff;
+      font-family: var(--font-display, 'Oswald', sans-serif);
+      font-size: 0.85rem;
+      font-weight: 900;
+      border-radius: 2px;
+      line-height: 1;
+    }
+
+    .fullscreen-menu-overlay .brand-name-dark {
+      font-family: var(--font-display, 'Oswald', sans-serif);
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0b0b0b;
+    }
+
+    /* Close Button [X] */
+    .fullscreen-menu-overlay .menu-close-btn {
+      background: #0b0b0b !important;
+      border: none !important;
+      cursor: pointer !important;
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s !important;
+      position: relative !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+    }
+
+    .fullscreen-menu-overlay .menu-close-btn:hover {
+      transform: scale(1.08) rotate(90deg) !important;
+      background: #e10600 !important;
+    }
+
+    .fullscreen-menu-overlay .close-bar {
+      position: absolute;
+      width: 20px;
+      height: 2.5px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+
+    .fullscreen-menu-overlay .close-bar.bar-diag1 {
+      transform: rotate(45deg);
+    }
+
+    .fullscreen-menu-overlay .close-bar.bar-diag2 {
+      transform: rotate(-45deg);
+    }
+
+    /* Main Centered Typography Navigation Links */
+    .fullscreen-menu-overlay .menu-overlay-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex: 1 0 auto;
+      padding: 0.5rem clamp(1.5rem, 4vw, 3rem);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .fullscreen-menu-overlay .fullscreen-nav-wrap {
+      width: 100%;
+      text-align: center;
+    }
+
+    .fullscreen-menu-overlay .fullscreen-nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(0.25rem, 1.2vh, 0.85rem);
+    }
+
+    .fullscreen-menu-overlay .fullscreen-nav-item {
+      overflow: hidden;
+      line-height: 1.1;
+    }
+
+    .fullscreen-menu-overlay .fullscreen-nav-link {
+      display: inline-block;
+      font-family: var(--font-display, 'Oswald', sans-serif);
+      font-size: clamp(2rem, 5.2vh, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0b0b0b;
+      text-decoration: none;
+      position: relative;
+      padding: 0.1em 0;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .fullscreen-menu-overlay .fullscreen-nav-link:hover {
+      color: #e10600;
+      transform: translateX(10px);
+    }
+
+    /* Bottom social & info footer */
+    .fullscreen-menu-overlay .menu-overlay-footer {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem clamp(1.5rem, 4vw, 3rem) clamp(1rem, 2.5vh, 2rem);
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .fullscreen-menu-overlay .menu-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1rem, 2.5vw, 2.2rem);
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      padding-top: 1rem;
+    }
+
+    .fullscreen-menu-overlay .menu-footer-link {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0b0b0b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .fullscreen-menu-overlay .menu-footer-link:hover {
+      color: #e10600;
+    }
+  </style>
+
+  <!-- Decorative vertical grid lines -->
   <div class="menu-vertical-grid" aria-hidden="true">
     <span></span>
     <span></span>
@@ -14,51 +243,49 @@
 
   <!-- Top bar inside overlay -->
   <div class="menu-overlay-header">
-    <a href="/" class="menu-brand-logo" aria-label="Max Verstappen Home">
+    <a href="/" class="menu-brand-logo" onclick="window.closeFullscreenMenu(event)" aria-label="Max Verstappen Home">
       <span class="brand-car-number">1</span>
       <span class="brand-name-dark">MAX VERSTAPPEN</span>
     </a>
 
     <!-- Close button [X] -->
-    <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close navigation menu">
-      <span class="close-icon-box">
-        <span class="close-bar bar-diag1"></span>
-        <span class="close-bar bar-diag2"></span>
-      </span>
+    <button class="menu-close-btn" id="menuCloseBtn" onclick="window.closeFullscreenMenu(event)" type="button" aria-label="Close navigation menu">
+      <span class="close-bar bar-diag1"></span>
+      <span class="close-bar bar-diag2"></span>
     </button>
   </div>
 
-  <!-- Centered Huge Typography Navigation Links -->
+  <!-- Centered Massive Typography Navigation Links -->
   <div class="menu-overlay-content">
     <nav class="fullscreen-nav-wrap" aria-label="Fullscreen Navigation Links">
       <ul class="fullscreen-nav-list">
         <li class="fullscreen-nav-item">
-          <a href="/#about" class="fullscreen-nav-link" data-menu-target="#about">
+          <a href="/#about" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#about', event)">
             <span class="link-label">ABOUT</span>
           </a>
         </li>
         <li class="fullscreen-nav-item">
-          <a href="/#career" class="fullscreen-nav-link" data-menu-target="#career">
+          <a href="/#career" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#career', event)">
             <span class="link-label">CAREER</span>
           </a>
         </li>
         <li class="fullscreen-nav-item">
-          <a href="/#races" class="fullscreen-nav-link" data-menu-target="#races">
+          <a href="/#races" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#races', event)">
             <span class="link-label">RACES</span>
           </a>
         </li>
         <li class="fullscreen-nav-item">
-          <a href="/#gallery" class="fullscreen-nav-link" data-menu-target="#gallery">
+          <a href="/#gallery" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#gallery', event)">
             <span class="link-label">GALLERY</span>
           </a>
         </li>
         <li class="fullscreen-nav-item">
-          <a href="/#news" class="fullscreen-nav-link" data-menu-target="#news">
+          <a href="/#news" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#news', event)">
             <span class="link-label">NEWS</span>
           </a>
         </li>
         <li class="fullscreen-nav-item">
-          <a href="/#contact" class="fullscreen-nav-link" data-menu-target="#contact">
+          <a href="/#contact" class="fullscreen-nav-link" onclick="window.navigateFromMenu('#contact', event)">
             <span class="link-label">CONTACT</span>
           </a>
         </li>
@@ -83,4 +310,56 @@
       </a>
     </div>
   </div>
+
+  <script>
+    window.openFullscreenMenu = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const menu = document.getElementById('fullscreenMenu');
+      if (!menu) return;
+      menu.classList.add('active');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (window.lenis) {
+        try { window.lenis.stop(); } catch(err) {}
+      }
+    };
+
+    window.closeFullscreenMenu = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const menu = document.getElementById('fullscreenMenu');
+      if (!menu) return;
+      menu.classList.remove('active');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (window.lenis) {
+        try { window.lenis.start(); } catch(err) {}
+      }
+    };
+
+    window.navigateFromMenu = function(targetSelector, e) {
+      if (e && e.preventDefault) e.preventDefault();
+      window.closeFullscreenMenu();
+
+      setTimeout(function() {
+        const target = document.querySelector(targetSelector);
+        if (target) {
+          if (window.lenis) {
+            try {
+              window.lenis.scrollTo(target, { offset: -30, duration: 1.2 });
+              return;
+            } catch(err) {}
+          }
+          target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.location.hash = targetSelector;
+        }
+      }, 350);
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.closeFullscreenMenu();
+      }
+    });
+  </script>
 </div>

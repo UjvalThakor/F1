@@ -109,61 +109,49 @@
   transform: translateY(-2px);
 }
 
-/* Modern Menu Trigger Button on Navbar */
+/* Iconic Yellow Menu Trigger Button on Navbar (Image 2 style) */
 .nav-menu-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 9999px;
-  padding: 0.45rem 1.15rem;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  user-select: none;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 5px !important;
+  width: 44px !important;
+  height: 44px !important;
+  background-color: #fed60a !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 14px rgba(254, 214, 10, 0.35) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease !important;
+  user-select: none !important;
 }
 
 .nav-menu-btn:hover {
-  background: #fed60a;
-  color: #111111;
-  border-color: #fed60a;
+  transform: scale(1.06) !important;
+  box-shadow: 0 6px 22px rgba(254, 214, 10, 0.55) !important;
+}
+
+.nav-menu-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.nav-menu-btn .nav-menu-line {
+  display: block !important;
+  width: 22px !important;
+  height: 3px !important;
+  background-color: #000000 !important;
+  border-radius: 2px !important;
+  transition: transform 0.25s ease !important;
+}
+
+.nav-menu-btn:hover .nav-menu-line:first-child {
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(254, 214, 10, 0.35);
 }
 
-.nav-menu-label {
-  font-family: var(--font-display, 'Oswald', sans-serif);
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.nav-menu-hamburger {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  width: 18px;
-  height: 14px;
-}
-
-.hamburger-bar {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background-color: currentColor;
-  border-radius: 2px;
-  transition: transform 0.3s ease;
-}
-
-.nav-menu-btn:hover .bar-1 {
-  transform: translateX(2px);
-}
-.nav-menu-btn:hover .bar-2 {
-  transform: translateX(-2px);
+.nav-menu-btn:hover .nav-menu-line:last-child {
+  transform: translateY(1px);
 }
 
 /* ==========================================================================
@@ -581,10 +569,10 @@
 
 .bold-nav-full__hamburger {
   width: 44px;
-  height: 38px;
+  height: 44px;
   background-color: #FED60A;
   border: none;
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -592,18 +580,25 @@
   align-items: center;
   gap: 5px;
   position: relative;
-  transition: transform 0.2s cubic-bezier(.7, 0, .3, 1), background-color 0.2s;
+  transition: transform 0.2s cubic-bezier(.7, 0, .3, 1), background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(254, 214, 10, 0.35);
+  user-select: none;
 }
 
 .bold-nav-full__hamburger:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
+  box-shadow: 0 6px 22px rgba(254, 214, 10, 0.55);
+}
+
+.bold-nav-full__hamburger:active {
+  transform: scale(0.96);
 }
 
 .bold-nav-full__hamburger-bar {
-  width: 20px;
-  height: 2px;
+  width: 22px;
+  height: 3px;
   background-color: #000000;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 /* Foreground Content */
@@ -867,8 +862,10 @@
   color: #1a1a1c;
 }
 
+.progress-big-text .text-red,
 .progress-big-text .text-yellow {
-  color: #fed60a;
+  color: #e10600 !important;
+  text-shadow: 0 0 35px rgba(225, 6, 0, 0.35);
 }
 
 /* Old static 2D helmet wrapper is disabled in favor of unified 360 sticky engine */
