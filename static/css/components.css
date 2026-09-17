@@ -109,85 +109,295 @@
   transform: translateY(-2px);
 }
 
-/* Mobile Nav Toggle */
-.nav-toggle {
-  display: none;
+/* Modern Menu Trigger Button on Navbar */
+.nav-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  padding: 0.45rem 1.15rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  user-select: none;
+}
+
+.nav-menu-btn:hover {
+  background: #fed60a;
+  color: #111111;
+  border-color: #fed60a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(254, 214, 10, 0.35);
+}
+
+.nav-menu-label {
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.nav-menu-hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+  height: 14px;
+}
+
+.hamburger-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.nav-menu-btn:hover .bar-1 {
+  transform: translateX(2px);
+}
+.nav-menu-btn:hover .bar-2 {
+  transform: translateX(-2px);
+}
+
+/* ==========================================================================
+   FULLSCREEN YELLOW NAVIGATION OVERLAY (NICK HO / F1 STYLE)
+   ========================================================================== */
+.fullscreen-menu-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fed60a; /* Exact Nick Ho iconic yellow */
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.55s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.35s ease;
+  overflow: hidden;
+}
+
+.fullscreen-menu-overlay.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Subtle decorative vertical grid lines */
+.menu-vertical-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  pointer-events: none;
+  opacity: 0.08;
+  z-index: 1;
+}
+
+.menu-vertical-grid span {
+  width: 1px;
+  height: 100%;
+  background: #000000;
+}
+
+/* Header inside overlay */
+.menu-overlay-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+
+.brand-name-dark {
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+/* Close Button [X] */
+.menu-close-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   position: relative;
-  z-index: 1001;
-  flex-direction: column;
+}
+
+.close-icon-box {
+  width: 42px;
+  height: 42px;
+  background: #111111;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1), background-color 0.3s;
+}
+
+.menu-close-btn:hover .close-icon-box {
+  transform: rotate(90deg) scale(1.08);
+  background: #e10600;
+}
+
+.close-bar {
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: #fed60a;
+  border-radius: 2px;
+  transition: background-color 0.3s;
+}
+
+.menu-close-btn:hover .close-bar {
+  background: #ffffff;
+}
+
+.bar-diag1 {
+  transform: rotate(45deg);
+}
+
+.bar-diag2 {
+  transform: rotate(-45deg);
+}
+
+/* Center Navigation Links */
+.menu-overlay-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  padding: 1rem 1.5rem;
+}
+
+.fullscreen-nav-wrap {
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 6px;
 }
 
-.nav-toggle-line {
-  width: 26px;
-  height: 2px;
-  background-color: var(--text-primary);
-  transition: transform var(--transition-smooth), opacity var(--transition-smooth);
-}
-
-.nav-toggle.active .nav-toggle-line:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.nav-toggle.active .nav-toggle-line:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle.active .nav-toggle-line:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-/* Fullscreen Mobile Drawer */
-.mobile-nav-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--bg-primary);
-  z-index: 998;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 6rem 2rem 3rem;
-  transform: translateY(-100%);
-  transition: transform var(--transition-slow);
-}
-
-.mobile-nav-drawer.open {
-  transform: translateY(0);
-}
-
-.mobile-nav-menu {
+.fullscreen-nav-list {
   list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: clamp(0.5rem, 1.8vh, 1.4rem);
 }
 
-.mobile-nav-link {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+.fullscreen-nav-item {
+  overflow: hidden;
+}
+
+.fullscreen-nav-link {
+  text-decoration: none;
+  display: inline-block;
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   text-transform: uppercase;
-  color: var(--text-primary);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  color: #111111;
+  position: relative;
+  padding: 0 0.5rem;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
 }
 
-.mobile-nav-link .number {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--accent-red);
+.fullscreen-nav-link .link-label {
+  display: block;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fullscreen-nav-link:hover {
+  color: #111111;
+  transform: scale(1.06);
+}
+
+.fullscreen-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 4px;
+  background: #e10600;
+  transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fullscreen-nav-link:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* Footer inside overlay */
+.menu-overlay-footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: clamp(1.25rem, 2.5vh, 2.25rem) 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-footer-link {
+  text-decoration: none;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.7);
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.menu-footer-link:hover {
+  color: #111111;
+  transform: translateY(-1px);
 }
 
 /* --------------------------------------------------------------------------

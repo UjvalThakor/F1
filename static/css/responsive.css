@@ -27,10 +27,10 @@
 
 /* 1024px and below (Tablet Landscape / Port) */
 @media (max-width: 1024px) {
-  .nav-menu, .nav-social-icons {
+  .nav-social-icons {
     display: none;
   }
-  .nav-toggle {
+  .nav-menu-btn {
     display: flex;
   }
   

@@ -1,0 +1,86 @@
+{% load static %}
+<!-- FULLSCREEN YELLOW NAVIGATION MENU OVERLAY (NICK HO / F1 STYLE) -->
+<div class="fullscreen-menu-overlay" id="fullscreenMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Main Navigation Menu">
+  <!-- Subtle decorative vertical grid lines -->
+  <div class="menu-vertical-grid" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Top bar inside overlay -->
+  <div class="menu-overlay-header">
+    <a href="/" class="menu-brand-logo" aria-label="Max Verstappen Home">
+      <span class="brand-car-number">1</span>
+      <span class="brand-name-dark">MAX VERSTAPPEN</span>
+    </a>
+
+    <!-- Close button [X] -->
+    <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close navigation menu">
+      <span class="close-icon-box">
+        <span class="close-bar bar-diag1"></span>
+        <span class="close-bar bar-diag2"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Centered Huge Typography Navigation Links -->
+  <div class="menu-overlay-content">
+    <nav class="fullscreen-nav-wrap" aria-label="Fullscreen Navigation Links">
+      <ul class="fullscreen-nav-list">
+        <li class="fullscreen-nav-item">
+          <a href="/#about" class="fullscreen-nav-link" data-menu-target="#about">
+            <span class="link-label">ABOUT</span>
+          </a>
+        </li>
+        <li class="fullscreen-nav-item">
+          <a href="/#career" class="fullscreen-nav-link" data-menu-target="#career">
+            <span class="link-label">CAREER</span>
+          </a>
+        </li>
+        <li class="fullscreen-nav-item">
+          <a href="/#races" class="fullscreen-nav-link" data-menu-target="#races">
+            <span class="link-label">RACES</span>
+          </a>
+        </li>
+        <li class="fullscreen-nav-item">
+          <a href="/#gallery" class="fullscreen-nav-link" data-menu-target="#gallery">
+            <span class="link-label">GALLERY</span>
+          </a>
+        </li>
+        <li class="fullscreen-nav-item">
+          <a href="/#news" class="fullscreen-nav-link" data-menu-target="#news">
+            <span class="link-label">NEWS</span>
+          </a>
+        </li>
+        <li class="fullscreen-nav-item">
+          <a href="/#contact" class="fullscreen-nav-link" data-menu-target="#contact">
+            <span class="link-label">CONTACT</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Bottom social and info links -->
+  <div class="menu-overlay-footer">
+    <div class="menu-footer-links">
+      <a href="https://www.instagram.com/maxverstappen1/" target="_blank" rel="noopener noreferrer" class="menu-footer-link">
+        <span>Instagram</span>
+      </a>
+      <a href="https://twitter.com/Max33Verstappen" target="_blank" rel="noopener noreferrer" class="menu-footer-link">
+        <span>X (Twitter)</span>
+      </a>
+      <a href="https://www.verstappen.com" target="_blank" rel="noopener noreferrer" class="menu-footer-link">
+        <span>Verstappen.com</span>
+      </a>
+      <a href="mailto:info@verstappen.com" class="menu-footer-link">
+        <span>info@verstappen.com</span>
+      </a>
+    </div>
+  </div>
+</div>

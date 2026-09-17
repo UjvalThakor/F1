@@ -13,36 +13,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // 2. Mobile Nav Drawer Toggle
+  // 2. Fullscreen Navigation Menu Overlay (Nick Ho / F1 Style)
   const navToggle = document.getElementById('navToggle');
-  const heroMenuTrigger = document.getElementById('heroMenuTrigger');
-  const mobileDrawer = document.getElementById('mobileDrawer');
-  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  const fullscreenMenu = document.getElementById('fullscreenMenu');
+  const menuCloseBtn = document.getElementById('menuCloseBtn');
+  const fullscreenLinks = document.querySelectorAll('.fullscreen-nav-link');
 
-  function toggleDrawer() {
-    if (!mobileDrawer) return;
-    const isOpen = mobileDrawer.classList.contains('open');
-    if (isOpen) {
-      mobileDrawer.classList.remove('open');
-      navToggle?.classList.remove('active');
-      document.body.style.overflow = '';
-    } else {
-      mobileDrawer.classList.add('open');
-      navToggle?.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+  function openFullscreenMenu() {
+    if (!fullscreenMenu) return;
+    fullscreenMenu.classList.add('active');
+    fullscreenMenu.setAttribute('aria-hidden', 'false');
+    navToggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    window.lenis?.stop();
   }
 
-  if (navToggle) navToggle.addEventListener('click', toggleDrawer);
-  if (heroMenuTrigger) heroMenuTrigger.addEventListener('click', toggleDrawer);
+  function closeFullscreenMenu() {
+    if (!fullscreenMenu) return;
+    fullscreenMenu.classList.remove('active');
+    fullscreenMenu.setAttribute('aria-hidden', 'true');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    window.lenis?.start();
+  }
 
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileDrawer.classList.remove('open');
-        navToggle?.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+  if (navToggle) {
+    navToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      openFullscreenMenu();
     });
+  }
+
+  if (menuCloseBtn) {
+    menuCloseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeFullscreenMenu();
+    });
+  }
+
+  // Close on ESC key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fullscreenMenu?.classList.contains('active')) {
+      closeFullscreenMenu();
+    }
+  });
+
+  // Handle navigation link clicks with smooth scroll
+  fullscreenLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href') || link.getAttribute('data-menu-target') || '';
+      closeFullscreenMenu();
+
+      if (href.includes('#')) {
+        const hash = href.split('#')[1];
+        const targetEl = document.getElementById(hash);
+        if (targetEl) {
+          e.preventDefault();
+          setTimeout(() => {
+            if (window.lenis) {
+              window.lenis.scrollTo(targetEl, { offset: -40, duration: 1.2 });
+            } else {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 350);
+        }
+      }
+    });
+  });
 
   // 3. Cinematic Video Reel Modal
   const playVideoBtn = document.getElementById('playFilmBtn');

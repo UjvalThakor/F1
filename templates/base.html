@@ -75,29 +75,8 @@
   <!-- Navigation Bar -->
   {% include 'components/navbar.html' %}
 
-  <!-- Mobile Drawer Menu -->
-  <div class="mobile-nav-drawer" id="mobileDrawer">
-    <div class="mobile-drawer-top">
-      <div class="telemetry-label" style="margin-bottom: 2rem;">NAVIGATION // TELEMETRY</div>
-      <ul class="mobile-nav-menu">
-        <li><a href="/#about" class="mobile-nav-link"><span>ABOUT</span> <span class="number">01</span></a></li>
-        <li><a href="/#career" class="mobile-nav-link"><span>CAREER</span> <span class="number">02</span></a></li>
-        <li><a href="/#races" class="mobile-nav-link"><span>RACES</span> <span class="number">03</span></a></li>
-        <li><a href="/#gallery" class="mobile-nav-link"><span>GALLERY</span> <span class="number">04</span></a></li>
-        <li><a href="/#news" class="mobile-nav-link"><span>NEWS</span> <span class="number">05</span></a></li>
-        <li><a href="/#partners" class="mobile-nav-link"><span>PARTNERS</span> <span class="number">06</span></a></li>
-        <li><a href="/#contact" class="mobile-nav-link"><span>CONTACT</span> <span class="number">07</span></a></li>
-      </ul>
-    </div>
-    <div class="mobile-drawer-bottom">
-      <div class="telemetry-tag active" style="margin-bottom: 1rem;">
-        <span class="dot"></span> STATUS: ON TRACK
-      </div>
-      <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
-        ORACLE RED BULL RACING #1
-      </p>
-    </div>
-  </div>
+  <!-- Fullscreen Yellow Navigation Overlay (Nick Ho / F1 Style) -->
+  {% include 'components/fullscreen_menu.html' %}
 
   <!-- Main Content Area -->
   <main id="mainContent">
@@ -163,7 +142,7 @@
   <script src="{% static 'js/countdown.js' %}"></script>
   <script src="{% static 'js/gallery.js' %}"></script>
   <script src="{% static 'js/contact.js' %}"></script>
-  <script src="{% static 'js/main.js' %}?v=gallery_good_photos_v43"></script>
+  <script src="{% static 'js/main.js' %}?v=fullscreen_menu_v1"></script>
   {% block extra_js %}{% endblock %}
 </body>
 
