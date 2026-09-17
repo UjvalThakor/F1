@@ -42,6 +42,11 @@
     if (stage.dataset.initialized === 'true') return;
     stage.dataset.initialized = 'true';
 
+    // Static 4K Mode: keep helmet completely static and unmoveable
+    if (stage.querySelector('.helmet_static_img') || stage.classList.contains('is-static-4k')) {
+      return;
+    }
+
     // 1. Setup Canvas
     const canvas = document.createElement('canvas');
     canvas.setAttribute('data-helmet-canvas', '');
@@ -63,7 +68,7 @@
     function getFrameUrl(idx, useCdn = false) {
       const padded = String(idx + 1).padStart(CONFIG.padLength, '0');
       const base = (useCdn && CONFIG.cdnPath) ? CONFIG.cdnPath : CONFIG.localPath;
-      return `${base}${padded}${CONFIG.ext}`;
+      return `${base}${padded}${CONFIG.ext}?v=4k_v2`;
     }
 
     function resizeCanvas() {

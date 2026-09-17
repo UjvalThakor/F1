@@ -47,3 +47,5 @@ Desktop.ini
 
 # Temporary scratch
 scratch/
+scratch_*
+*.tmp

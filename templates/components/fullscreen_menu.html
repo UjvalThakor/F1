@@ -367,5 +367,18 @@
         window.closeFullscreenMenu();
       }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const menu = document.getElementById('fullscreenMenu');
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const href = anchor.getAttribute('href');
+          if (href && (href.startsWith('#') || href.startsWith('/#') || href === '/')) {
+            window.closeFullscreenMenu();
+          }
+        });
+      });
+    });
   </script>
 </div>

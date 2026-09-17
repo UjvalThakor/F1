@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ site_settings.site_title|default:"NICK HO — OFFICIAL MOTORSPORTS" }}{% endblock %}
+{% block title %}{{ site_settings.site_title|default:"MAX VERSTAPPEN — 4x WORLD CHAMPION | ORACLE RED BULL RACING" }}{% endblock %}
 
 {% block content %}
 <!-- 1. FULLSCREEN CINEMATIC HERO -->
 {% include 'components/hero.html' %}
 
-<!-- NICK HO 360° INTERACTIVE HELMET SHOWCASE ZONE (STATEMENT & PARTNERS) -->
+<!-- MAX VERSTAPPEN 4K STATIC HELMET SHOWCASE ZONE (STATEMENT & PARTNERS) -->
 <div class="helmet-showcase-zone" id="helmetShowcaseZone" data-helmet-section="">
-  <!-- Shared Sticky 360 Interactive Helmet Layer (Pinning from Statement through Partners) -->
+  <!-- Shared Sticky Static 4K Helmet Layer (Pinning from Statement through Partners) -->
   <div class="helmet_wrapper" data-helmet-layer="">
     <div class="helmet_sticky" data-helmet-sticky="">
-      <div class="helmet_div" data-helmet-stage="" id="helmetStage">
-        <!-- 360° Interactive Canvas injected by helmet-engine.js -->
+      <div class="helmet_div is-static-4k" data-helmet-stage="" id="helmetStage">
+        <img 
+          src="{% static 'images/mv_helmet_4k_static_transparent.png' %}?v=4k_front_v1" 
+          alt="Max Verstappen Official 4K World Champion Red Bull Racing Helmet" 
+          class="helmet_static_img" 
+          id="helmetStaticImg"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
     </div>
   </div>

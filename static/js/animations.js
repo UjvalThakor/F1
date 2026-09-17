@@ -577,8 +577,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (volBtn) {
         const volMutedIcon = volBtn.querySelector('.vol-icon-muted');
         const volActiveIcon = volBtn.querySelector('.vol-icon-active');
-        if (volMutedIcon) volMutedIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'none' : 'block';
-        if (volActiveIcon) volActiveIcon.style.display = (isAudioEnabled && currentVolume > 0) ? 'block' : 'none';
+        const isSoundActive = (isAudioEnabled && currentVolume > 0);
+        if (volMutedIcon) volMutedIcon.style.display = isSoundActive ? 'none' : 'block';
+        if (volActiveIcon) volActiveIcon.style.display = isSoundActive ? 'block' : 'none';
+        volBtn.classList.toggle('is-sound-on', isSoundActive);
+        volBtn.setAttribute('title', isSoundActive ? 'Mute Sound' : 'Unmute Sound');
+        volBtn.setAttribute('aria-label', isSoundActive ? 'Mute Sound' : 'Unmute Sound');
       }
       if (volSlider) {
         volSlider.value = (isAudioEnabled && currentVolume > 0) ? currentVolume : 0;
@@ -769,9 +773,10 @@ document.addEventListener('DOMContentLoaded', () => {
       volBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (videoEl.muted || !isAudioEnabled) {
-          enableAndPlayAudio(currentVolume > 0 ? currentVolume : 1.0);
+          enableAndPlayAudio(1.0);
         } else {
-          updateAudioUI(false);
+          videoEl.muted = true;
+          updateAudioUI(false, 0);
         }
       });
     }
