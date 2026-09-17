@@ -109,7 +109,7 @@
   transform: translateY(-2px);
 }
 
-/* Iconic Yellow Menu Trigger Button on Navbar (Image 2 style) */
+/* Iconic Red Menu Trigger Button on Navbar */
 .nav-menu-btn {
   display: flex !important;
   flex-direction: column !important;
@@ -118,19 +118,20 @@
   gap: 5px !important;
   width: 44px !important;
   height: 44px !important;
-  background-color: #fed60a !important;
+  background-color: #e10600 !important;
   border: none !important;
   border-radius: 6px !important;
   cursor: pointer !important;
   padding: 0 !important;
-  box-shadow: 0 4px 14px rgba(254, 214, 10, 0.35) !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease !important;
+  box-shadow: 0 4px 18px rgba(225, 6, 0, 0.45) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, background-color 0.2s !important;
   user-select: none !important;
 }
 
 .nav-menu-btn:hover {
   transform: scale(1.06) !important;
-  box-shadow: 0 6px 22px rgba(254, 214, 10, 0.55) !important;
+  background-color: #ff1818 !important;
+  box-shadow: 0 6px 26px rgba(225, 6, 0, 0.7) !important;
 }
 
 .nav-menu-btn:active {
@@ -141,7 +142,7 @@
   display: block !important;
   width: 22px !important;
   height: 3px !important;
-  background-color: #000000 !important;
+  background-color: #ffffff !important;
   border-radius: 2px !important;
   transition: transform 0.25s ease !important;
 }
@@ -162,7 +163,9 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #fed60a; /* Exact Nick Ho iconic yellow */
+  background: radial-gradient(circle at 50% 30%, rgba(225, 6, 0, 0.1) 0%, rgba(10, 10, 15, 0.98) 75%), #0a0a0f;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   z-index: 99999;
   display: flex;
   flex-direction: column;
@@ -170,7 +173,7 @@
   transform: translateY(-100%);
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.55s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.35s ease;
+  transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.3s ease;
   overflow: hidden;
 }
 
@@ -223,7 +226,7 @@
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #111111;
+  color: #ffffff;
 }
 
 /* Close Button [X] */
@@ -261,7 +264,7 @@
   position: absolute;
   width: 18px;
   height: 2px;
-  background: #fed60a;
+  background: #ffffff;
   border-radius: 2px;
   transition: background-color 0.3s;
 }
@@ -319,7 +322,7 @@
   line-height: 1.05;
   letter-spacing: -0.015em;
   text-transform: uppercase;
-  color: #111111;
+  color: #ffffff;
   position: relative;
   padding: 0 0.5rem;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
@@ -376,7 +379,7 @@
   font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
   font-size: 0.95rem;
   font-weight: 700;
-  color: rgba(17, 17, 17, 0.7);
+  color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.02em;
   transition: color 0.2s ease, transform 0.2s ease;
   display: inline-flex;
@@ -570,7 +573,7 @@
 .bold-nav-full__hamburger {
   width: 44px;
   height: 44px;
-  background-color: #FED60A;
+  background-color: #e10600;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -581,13 +584,14 @@
   gap: 5px;
   position: relative;
   transition: transform 0.2s cubic-bezier(.7, 0, .3, 1), background-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(254, 214, 10, 0.35);
+  box-shadow: 0 4px 18px rgba(225, 6, 0, 0.45);
   user-select: none;
 }
 
 .bold-nav-full__hamburger:hover {
   transform: scale(1.06);
-  box-shadow: 0 6px 22px rgba(254, 214, 10, 0.55);
+  background-color: #ff1818;
+  box-shadow: 0 6px 26px rgba(225, 6, 0, 0.7);
 }
 
 .bold-nav-full__hamburger:active {
@@ -597,7 +601,7 @@
 .bold-nav-full__hamburger-bar {
   width: 22px;
   height: 3px;
-  background-color: #000000;
+  background-color: #ffffff;
   border-radius: 2px;
 }
 
@@ -1178,8 +1182,8 @@
 }
 
 .about_skip_btn {
-  background-color: #fed60a;
-  color: #0b0c10;
+  background-color: #e10600;
+  color: #ffffff;
   font-family: var(--font-display, 'Oswald', sans-serif);
   font-weight: 800;
   font-size: 0.95rem;
@@ -1189,7 +1193,7 @@
   padding: 0.8rem 2.2rem;
   border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(254, 214, 10, 0.3);
+  box-shadow: 0 8px 24px rgba(225, 6, 0, 0.45);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1199,8 +1203,8 @@
 
 .about_skip_btn:hover {
   transform: translateY(-2px) scale(1.02);
-  background-color: #ffe600;
-  box-shadow: 0 12px 30px rgba(254, 214, 10, 0.5);
+  background-color: #ff1818;
+  box-shadow: 0 12px 32px rgba(225, 6, 0, 0.7);
 }
 
 /* Center Images Container */
@@ -1566,7 +1570,7 @@
 /* Active Highlight & Hover States */
 .agenda_item:hover,
 .agenda_item.is-active {
-  color: #fed60a !important;
+  color: #e10600 !important;
 }
 
 .agenda_item:hover .agenda_title,
@@ -1576,20 +1580,20 @@
 
 .agenda_item:hover .agenda_subtitle,
 .agenda_item.is-active .agenda_subtitle {
-  color: #fed60a !important;
+  color: #e10600 !important;
   opacity: 1;
 }
 
 .agenda_item:hover .agenda_date,
 .agenda_item.is-active .agenda_date {
-  color: #fed60a !important;
+  color: #e10600 !important;
 }
 
 .agenda_item:hover .agenda_line,
 .agenda_item.is-active .agenda_line {
-  background-color: #fed60a !important;
+  background-color: #e10600 !important;
   height: 2px !important;
-  box-shadow: 0 0 10px rgba(254, 214, 10, 0.5);
+  box-shadow: 0 0 10px rgba(225, 6, 0, 0.5);
 }
 
 /* Legacy class compatibility */
@@ -2085,14 +2089,14 @@
   pointer-events: none;
 }
 
-/* Signature Yellow Become Partner Button (Nick Ho Style) */
+/* Signature Red Become Partner Button */
 .btn-become-partner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
-  background-color: #fed60a;
-  color: #000000;
+  background-color: #e10600;
+  color: #ffffff;
   font-family: var(--font-display, 'Oswald', sans-serif);
   font-size: clamp(0.95rem, 1.2vw, 1.12rem);
   font-weight: 800;
@@ -2101,7 +2105,7 @@
   padding: 0.9rem 2.2rem;
   border-radius: 4px;
   text-decoration: none;
-  box-shadow: 0 8px 22px rgba(254, 214, 10, 0.4);
+  box-shadow: 0 8px 22px rgba(225, 6, 0, 0.45);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: auto;
   cursor: pointer;
@@ -2110,9 +2114,9 @@
 }
 
 .btn-become-partner:hover {
-  background-color: #ffe600;
+  background-color: #ff1818;
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 12px 28px rgba(254, 214, 10, 0.55);
+  box-shadow: 0 12px 28px rgba(225, 6, 0, 0.7);
 }
 
 .btn-become-partner:active {
@@ -3430,9 +3434,9 @@
 }
 
 .badge-gold {
-  background: rgba(255, 214, 10, 0.18);
-  color: #fed60a;
-  border: 1px solid rgba(255, 214, 10, 0.4);
+  background: rgba(225, 6, 0, 0.18);
+  color: #ff4747;
+  border: 1px solid rgba(225, 6, 0, 0.4);
 }
 
 .badge-red {

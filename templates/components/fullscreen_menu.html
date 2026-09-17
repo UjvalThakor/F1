@@ -1,8 +1,8 @@
 {% load static %}
-<!-- FULLSCREEN YELLOW NAVIGATION MENU OVERLAY (NICK HO / F1 STYLE) -->
+<!-- FULLSCREEN NAVIGATION MENU OVERLAY (MATCHING DARK RACING RED BULL UI) -->
 <div class="fullscreen-menu-overlay" id="fullscreenMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Main Navigation Menu">
   <style>
-    /* Critical inline styles: ensures instant fixed fullscreen layout without FOUC or cache issues */
+    /* Critical inline styles: ensures instant fixed fullscreen layout matching dark Red Bull racing UI */
     .fullscreen-menu-overlay {
       position: fixed !important;
       inset: 0 !important;
@@ -11,7 +11,9 @@
       width: 100vw !important;
       height: 100vh !important;
       height: 100dvh !important;
-      background-color: #fed60a !important; /* Exact Nick Ho iconic yellow */
+      background: radial-gradient(circle at 50% 30%, rgba(225, 6, 0, 0.1) 0%, rgba(10, 10, 15, 0.98) 75%), #0a0a0f !important;
+      backdrop-filter: blur(25px) !important;
+      -webkit-backdrop-filter: blur(25px) !important;
       z-index: 999999 !important;
       display: flex !important;
       flex-direction: column !important;
@@ -43,14 +45,14 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       pointer-events: none;
-      opacity: 0.08;
+      opacity: 0.05;
       z-index: 1;
     }
 
     .fullscreen-menu-overlay .menu-vertical-grid span {
       width: 1px;
       height: 100%;
-      background: #000000;
+      background: #ffffff;
     }
 
     /* Header inside overlay */
@@ -88,6 +90,7 @@
       font-weight: 900;
       border-radius: 2px;
       line-height: 1;
+      box-shadow: 0 0 12px rgba(225, 6, 0, 0.4);
     }
 
     .fullscreen-menu-overlay .brand-name-dark {
@@ -96,13 +99,13 @@
       font-weight: 900;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #0b0b0b;
+      color: #ffffff !important;
     }
 
     /* Close Button [X] */
     .fullscreen-menu-overlay .menu-close-btn {
-      background: #0b0b0b !important;
-      border: none !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
       cursor: pointer !important;
       width: 44px !important;
       height: 44px !important;
@@ -110,21 +113,23 @@
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s !important;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
       position: relative !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
     }
 
     .fullscreen-menu-overlay .menu-close-btn:hover {
       transform: scale(1.08) rotate(90deg) !important;
       background: #e10600 !important;
+      border-color: #e10600 !important;
+      box-shadow: 0 0 20px rgba(225, 6, 0, 0.6) !important;
     }
 
     .fullscreen-menu-overlay .close-bar {
       position: absolute;
       width: 20px;
       height: 2.5px;
-      background: #ffffff;
+      background: #ffffff !important;
       border-radius: 2px;
     }
 
@@ -179,17 +184,18 @@
       line-height: 1.1;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #0b0b0b;
+      color: #ffffff !important;
       text-decoration: none;
       position: relative;
       padding: 0.1em 0;
       cursor: pointer;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: color 0.22s ease, transform 0.22s ease, text-shadow 0.22s ease;
     }
 
     .fullscreen-menu-overlay .fullscreen-nav-link:hover {
-      color: #e10600;
-      transform: translateX(10px);
+      color: #e10600 !important;
+      transform: translateX(12px);
+      text-shadow: 0 0 35px rgba(225, 6, 0, 0.55);
     }
 
     /* Bottom social & info footer */
@@ -210,7 +216,7 @@
       align-items: center;
       justify-content: center;
       gap: clamp(1rem, 2.5vw, 2.2rem);
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
       padding-top: 1rem;
     }
 
@@ -220,13 +226,13 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #0b0b0b;
+      color: rgba(255, 255, 255, 0.65) !important;
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
     .fullscreen-menu-overlay .menu-footer-link:hover {
-      color: #e10600;
+      color: #e10600 !important;
     }
   </style>
 
