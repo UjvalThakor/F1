@@ -866,107 +866,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (progressSection && progressHelmet && !prefersReduced && typeof ScrollTrigger !== 'undefined') {
-    const isMobile = window.innerWidth <= 768;
-    const moveDistance = isMobile ? 110 : 165;
-
-    // Set hardware-accelerated initial transform state
-    gsap.set(progressHelmet, {
-      force3D: true,
-      transformPerspective: 1000
-    });
-
-    // Pinned Scroll-Driven Timeline
-    const pinnedTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: progressSection,
-        start: 'top top',
-        end: '+=100%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 0.8, // Smooth fluid linear interpolation
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
-        onEnter: () => setCursorPinnedMode(true),
-        onLeave: () => setCursorPinnedMode(false),
-        onEnterBack: () => setCursorPinnedMode(true),
-        onLeaveBack: () => setCursorPinnedMode(false),
-        onUpdate: (self) => {
-          // Safeguard: ensure cursor is hidden strictly within pinned progress
-          if (self.progress > 0.02 && self.progress < 0.98) {
-            if (!document.body.classList.contains('cursor-pinned-hidden')) {
-              setCursorPinnedMode(true);
-            }
-          } else if (self.progress >= 0.98 || self.progress <= 0.02) {
-            if (document.body.classList.contains('cursor-pinned-hidden')) {
-              setCursorPinnedMode(false);
-            }
-          }
-        }
-      }
-    });
-
-    // 1. Helmet moves vertically DOWN smoothly in response to scroll progress
-    pinnedTimeline.to(progressHelmet, {
-      y: moveDistance,
-      scale: 1.05,
-      rotationZ: 1.5,
-      ease: 'power1.inOut',
-      force3D: true
-    }, 0);
-
-    // 2. Subtle background text scale & depth push
-    if (statementText) {
-      pinnedTimeline.to(statementText, {
-        scale: 0.96,
-        opacity: 0.88,
-        ease: 'power1.inOut'
-      }, 0);
-    }
-
-    // 3. Floating satellite cards subtle parallax depth
+  if (progressSection && !prefersReduced && typeof ScrollTrigger !== 'undefined') {
     if (cardTopLeft) {
-      pinnedTimeline.to(cardTopLeft, {
-        y: -40,
+      gsap.to(cardTopLeft, {
+        scrollTrigger: {
+          trigger: progressSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        },
+        y: -50,
         rotation: -2,
         ease: 'none'
-      }, 0);
+      });
     }
-
     if (cardBottomRight) {
-      pinnedTimeline.to(cardBottomRight, {
-        y: 35,
+      gsap.to(cardBottomRight, {
+        scrollTrigger: {
+          trigger: progressSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        },
+        y: 40,
         rotation: 2,
         ease: 'none'
-      }, 0);
+      });
     }
-
-    // Interactive mouse tilt on the helmet during hover
-    progressSection.addEventListener('mousemove', (e) => {
-      const rect = progressSection.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      gsap.to(progressHelmet, {
-        x: x * 25,
-        rotationY: x * 15,
-        rotationX: -y * 12,
-        duration: 0.5,
-        ease: 'power2.out',
-        overwrite: 'auto'
-      });
-    });
-
-    progressSection.addEventListener('mouseleave', () => {
-      gsap.to(progressHelmet, {
-        x: 0,
-        rotationY: 0,
-        rotationX: 0,
-        duration: 0.6,
-        ease: 'power3.out'
-      });
-    });
   }
 
   // Ensure all ScrollTriggers are properly sorted by DOM order and refreshed
