@@ -21,6 +21,21 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', '*').split(',') if h.strip()]
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# CSRF Trusted Origins for Render and local development
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.environ.get(
+        'CSRF_TRUSTED_ORIGINS',
+        'https://*.onrender.com,http://localhost:8000,http://127.0.0.1:8000'
+    ).split(',') if origin.strip()
+]
+if RENDER_EXTERNAL_HOSTNAME:
+    https_origin = f'https://{RENDER_EXTERNAL_HOSTNAME}'
+    if https_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(https_origin)
 
 # Application definition
 INSTALLED_APPS = [
@@ -80,21 +95,39 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
-# Support PostgreSQL via DATABASE_URL or environment variables, fallback seamlessly to SQLite for local dev
+# Support PostgreSQL via DATABASE_URL or fallback seamlessly to SQLite for local dev
 DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL and DATABASE_URL.startswith(('postgres://', 'postgresql://')):
-    import urllib.parse
-    url = urllib.parse.urlparse(DATABASE_URL)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port or 5432,
+if DATABASE_URL:
+    try:
+        import dj_database_url
+        DATABASES = {
+            'default': dj_database_url.config(
+                default=DATABASE_URL,
+                conn_max_age=600,
+                conn_health_checks=True,
+            )
         }
-    }
+    except ImportError:
+        if DATABASE_URL.startswith(('postgres://', 'postgresql://')):
+            import urllib.parse
+            url = urllib.parse.urlparse(DATABASE_URL)
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': url.path[1:],
+                    'USER': url.username,
+                    'PASSWORD': url.password,
+                    'HOST': url.hostname,
+                    'PORT': url.port or 5432,
+                }
+            }
+        else:
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': BASE_DIR / 'db.sqlite3',
+                }
+            }
 else:
     DATABASES = {
         'default': {
@@ -122,6 +155,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' if not DEBUG else 'django.contrib.staticfiles.storage.StaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 
 # Media files (User uploads, high-res motorsport photos, videos)
 MEDIA_URL = '/media/'

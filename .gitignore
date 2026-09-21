@@ -49,3 +49,7 @@ Desktop.ini
 scratch/
 scratch_*
 *.tmp
+
+# Static collected & Databases
+staticfiles/
+*.sqlite3

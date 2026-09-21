@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: max-verstappen-f1
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: "2"
+      # Uncomment the database connection below if you add a Render PostgreSQL database
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: f1-db
+      #     property: connectionString
+
+# Optional Render Managed PostgreSQL (Free Tier)
+# databases:
+#   - name: f1-db
+#     plan: free
