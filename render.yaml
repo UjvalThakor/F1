@@ -2,7 +2,7 @@ services:
   - type: web
     name: max-verstappen-f1
     runtime: python
-    buildCommand: "./build.sh"
+    buildCommand: "bash build.sh"
     startCommand: "gunicorn config.wsgi:application"
     plan: free
     envVars:

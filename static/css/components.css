@@ -550,26 +550,15 @@
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 1.5rem 2.5rem;
   z-index: 50;
   box-sizing: border-box;
 }
 
-.bold-nav-full__logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.nav-logo-img {
-  height: 22px;
-  width: auto;
-  filter: brightness(0) invert(1);
-}
-
 .bold-nav-full__hamburger {
+  margin-left: auto;
   width: 44px;
   height: 44px;
   background-color: #e10600;

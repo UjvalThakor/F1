@@ -49,6 +49,7 @@ Desktop.ini
 scratch/
 scratch_*
 *.tmp
+Screen Recording*.mp4
 
 # Static collected & Databases
 staticfiles/
